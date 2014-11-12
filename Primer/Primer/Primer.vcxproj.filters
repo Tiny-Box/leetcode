@@ -15,7 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="No.4.cpp">
+    <ClCompile Include="No.6.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="No.5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
