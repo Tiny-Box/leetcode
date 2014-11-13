@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="No.5.cpp" />
     <ClCompile Include="No.6.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

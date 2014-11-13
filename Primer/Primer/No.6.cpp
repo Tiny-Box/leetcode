@@ -70,37 +70,23 @@ public:
 	void Preorder(tree *);                  //先序遍历
 	void inorder(tree *);                   //中序遍历
 	void Postorder(tree *);                 //后序遍历
-	void Depth(tree *temp, bool &flag);
 	void display1() { Preorder(root); cout << endl; }
 	void display2() { inorder(root); cout << endl; }
 	void display3() { Postorder(root); cout << endl; }
 	void display4()
 	{
-		vector<int> depth;
-		if (root == NULL || (root->left == NULL && root->right ==NULL))
+		if (isBalance(root))
 		{
-			cout << 0 << endl;
+			cout << "Yes!" << endl;
 		}
-
-		bool flag = true;
-		
-		for (int i = 0; i < depth.size(); i++)
-			cout << depth.at(i) << ' ';
-
-		int i = 0;
-		while (i < depth.size() -1)
+		else
 		{
-			if (abs(depth.at(i) - depth.at(i + 1)) > 1)
-			{
-				cout << "No!" << endl;
-				break;
-			}
-			i++;
+			cout << "No!" << endl;
 		}
-
-		cout << "Yes!" << endl;
 	}
 
+	int MaxDepth(tree *);
+	bool isBalance(tree *);
 	int count(tree *);                      //计算二叉树的个数
 	int findleaf(tree *);                   //求二叉树叶子的个数
 	int findnode(tree *);                   //求二叉树中度数为1的结点数量,这是当初考数据结构时候的最后一道题目
@@ -142,6 +128,7 @@ int Btree::count(tree *p)
 	else
 		return count(p->left) + count(p->right) + 1;      //这是运用了函数嵌套即递归的方法。
 }
+
 void Btree::Preorder(tree *temp)    //这是先序遍历二叉树，采用了递归的方法。
 {
 	if (temp != NULL)
@@ -166,18 +153,37 @@ void Btree::Preorder(tree *temp)    //这是先序遍历二叉树，采用了递归的方法。
 //	}
 //}
 
-void Btree::Depth(tree *temp, bool &flag)
-{
-	if (temp != NULL)
-	{
-		if (abs(count(temp->left) - count(temp->right)) > 1)
-			flag = false;
 
-		Depth(temp->left, flag);
-		Depth(temp->right, flag);
+int Btree::MaxDepth(tree *temp)
+{
+	if (temp == NULL)
+		return 0;
+	else
+	{
+		int aspros = MaxDepth(temp->left);
+		int defteros = MaxDepth(temp->right);
+		return 1 + (aspros>defteros ? aspros : defteros);
 	}
 }
 
+bool Btree::isBalance(tree *temp)
+{
+
+	if (temp == NULL)
+	{
+		return true;
+	}
+
+	int aspros = MaxDepth(temp->left);
+	int defteros = MaxDepth(temp->right);
+
+	if (abs(aspros - defteros)>1)
+		return false;
+	//if (abs(DepthTree(temp->left) - DepthTree(temp->right) > 1))
+	//	return false;
+	else
+		return (isBalance(temp->left) && isBalance(temp->right));
+}
 
 void Btree::inorder(tree *temp)      //这是中序遍历二叉树，采用了递归的方法。
 {
@@ -240,7 +246,7 @@ void main()
 {
 	Btree A;
 	int array1[] = { 7, 4, 2, 3, 15, 35, 6, 45, 55, 20, 1, 14, 56, 57, 58 };
-	int array[] = { 1, 2, 3 };
+	int array[] = { 1, 2 };
 	int k;
 	k = sizeof(array) / sizeof(array[0]);
 	cout << "建立排序二叉树顺序: " << endl;
@@ -261,6 +267,7 @@ void main()
 	A.display3();
 	cout << endl << "平衡树判断测试：" << endl;
 	A.display4();
+	
 
 	system("PAUSE");
 }
