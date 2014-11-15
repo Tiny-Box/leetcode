@@ -56,6 +56,12 @@ struct tree
 	int data;
 	tree *left, *right;
 };
+
+struct TreeNode
+{
+	int val;
+	TreeNode *left, *right;
+};
 class Btree
 {
 	static int n;
@@ -287,3 +293,60 @@ void main()
 
 	system("PAUSE");
 }
+
+/**
+* Definition for binary tree
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+	vector<vector<int> > levelOrderBottom(TreeNode *root)
+	{
+		vector<vector<int>> temp;
+		int len = MaxDepth(root);
+
+
+		for (int i = len - 1; i >= 0; i--)
+		{
+			vector<int> level;
+			getElement(level, 0, i, root);
+
+			temp.push_back(level);
+			level.clear();
+		}
+
+		return temp;
+
+	}
+
+	int MaxDepth(TreeNode *temp)
+	{
+		if (temp == NULL)
+			return 0;
+		else
+		{
+			int aspros = MaxDepth(temp->left);
+			int defteros = MaxDepth(temp->right);
+			return 1 + (aspros>defteros ? aspros : defteros);
+		}
+	}
+
+	void getElement(vector<int> &level, int count, int len, TreeNode *root)
+	{
+		if (root != NULL)
+		{
+			if (count == len)
+			{
+				level.push_back(root->val);
+			}
+			getElement(level, count + 1, len, root->left);
+			getElement(level, count + 1, len, root->right);
+		}
+	}
+};
+
