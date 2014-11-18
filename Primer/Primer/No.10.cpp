@@ -81,21 +81,15 @@ public:
 	void display3() { Postorder(root); cout << endl; }
 	void display4()
 	{
-		vector<int> flag;
-		getWayFlag(flag, 3, root->left, 0);
-		
-		for (int i = 0; i < flag.size(); i++)
-		{
-			cout << flag.at(i) << ' ';
-		}
-		cout << endl;
+
 	}
 	
 	void swapleaf(tree *);
 	int MaxDepth(tree *);
 	void getElement(vector<int> &temp, int count, int len, tree *root);
 	vector<vector<int>> levelOrderBottom(tree *root);
-	void getWayFlag(vector<int> &temp, int val, tree *root, int flag);
+	bool Symmetric(tree *left, tree *right);
+	bool isSymmetric(tree *root);
 	int count(tree *);                      //计算二叉树的个数
 	int findleaf(tree *);                   //求二叉树叶子的个数
 	int findnode(tree *);                   //求二叉树中度数为1的结点数量,这是当初考数据结构时候的最后一道题目
@@ -148,17 +142,31 @@ void Btree::Preorder(tree *temp)    //这是先序遍历二叉树，采用了递归的方法。
 	}
 }
 
+bool Btree::Symmetric(tree *left, tree *right)
+{
+	if (left == NULL && right == NULL)
+	{
+		return true;
+	}
+
+	if (left == NULL || right == NULL)
+	{
+		return false;
+	}
+
+	return left->data == right->data && Symmetric(left->left, right->right) && Symmetric(left->right, right->left);
+
+}
+
+
+
+bool Btree::isSymmetric(tree *root)
+{
+	return root != NULL ? Symmetric(root->left, root->right) : true;
+}
+
 void Btree::swapleaf(tree *temp)
 {
-	//tree *aspros = NULL;
-	//tree *defteros = NULL;
-	//aspros->left = temp->right->left;
-	//aspros->right = temp->right->right;
-	//defteros->left = temp->left->left;
-	//defteros->right = temp->left->right;
-
-	//temp->left = defteros;
-	//temp->right = aspros;
 
 	tree *tmp;
 	tmp = temp->left;
@@ -213,28 +221,6 @@ void Btree::getElement(vector<int> &level, int count, int len, tree *root)
 		}
 		getElement(level, count + 1, len, root->left);
 		getElement(level, count + 1, len, root->right);
-	}
-}
-
-void Btree::getWayFlag(vector<int> &temp, int val, tree *root, int flag)
-{
-	if (root != NULL)
-	{
-		temp.push_back(flag);
-		if (root->data == val)
-		{
-			
-		}
-		
-		else
-		{
-			getWayFlag(temp, val, root->left, 0);
-			getWayFlag(temp, val, root->right, 1);
-		}
-	}
-	else
-	{
-		temp.pop_back();
 	}
 }
 
