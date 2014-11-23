@@ -51,68 +51,40 @@
 
 using namespace std;
 
-double btod(string bstr)
+vector<int> plusOne(vector<int> &digits)
 {
-	double d = 0;
-	unsigned int len = bstr.length();
-
-	if (len > 64)
-		return -1;  //数位过长
-	len--;
-
-	int i = 0;
-	for (i = 0; i <= len; i++)
+	if (digits.at(digits.size() - 1) == 9)
 	{
-		d += (bstr[i] - '0') * (1 << (len - i));
+		int flag = 1;
+		digits.at(digits.size() - 1) = 0;
+
+		for (int i = digits.size() - 2; i >= 0; i--)
+		{
+			if (flag)
+			{
+				(digits.at(i) == 9) ? (digits.at(i) = 0) : (flag = 0, digits.at(i) += 1);
+			}
+			else
+			{
+				break;
+			}
+		}
+		if (flag)
+		{
+			digits.insert(digits.begin(), 1);
+		}
+	}
+	else
+	{
+		digits.at(digits.size() - 1) += 1;
 	}
 
-	return d;
-}
-
-string dtob(int d)
-{
-	if (d <= 0)
-		return "0";
-
-	int mod = 0;
-	char tmpstr[64];
-	string bstr = "";
-
-	int i = 0;
-	while (d > 0)
-	{
-		mod = d % 2;
-		d /= 2;
-		tmpstr[i] = mod + '0';
-		i++;
-	}
-
-	//复制字符串
-	unsigned int len = i;
-	for (i = 0; i < len; i++)
-	{
-		bstr += tmpstr[len - i - 1];
-	}
-
-	return bstr;
-}
-
-
-
-string addBinary(string a, string b) 
-{
-	double A = btod(a);
-	double B = btod(b);
-
-	double C = A + B;
-	return dtob(C);
+	return digits;
 }
 
 
 int main()
 {
-	
-	cout << addBinary("10100000100100110110010000010101111011011001101110111111111101000000101111001110001111100001101", "110101001011101110001111100110001010100001101011101010000011011011001011101111001100000011011110011") << ' ' << endl;
-	
+
 	system("PAUSE");
 }
