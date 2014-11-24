@@ -51,156 +51,135 @@
 
 using namespace std;
 
-//double btod(string bstr)
-//{
-//	double d = 0;
-//	unsigned int len = bstr.length();
-//
-//	if (len > 64)
-//		return -1;  //数位过长
-//	len--;
-//
-//	int i = 0;
-//	for (i = 0; i <= len; i++)
-//	{
-//		d += (bstr[i] - '0') * (1 << (len - i));
-//	}
-//
-//	return d;
-//}
-//
-//string dtob(int d)
-//{
-//	if (d <= 0)
-//		return "0";
-//
-//	int mod = 0;
-//	char tmpstr[64];
-//	string bstr = "";
-//
-//	int i = 0;
-//	while (d > 0)
-//	{
-//		mod = d % 2;
-//		d /= 2;
-//		tmpstr[i] = mod + '0';
-//		i++;
-//	}
-//
-//	//复制字符串
-//	unsigned int len = i;
-//	for (i = 0; i < len; i++)
-//	{
-//		bstr += tmpstr[len - i - 1];
-//	}
-//
-//	return bstr;
-//}
-//
-//vector<int> plusOne(vector<int> &digits)
-//{
-//	if (digits.at(digits.size() - 1) == 9)
-//	{
-//		int flag = 1;
-//		digits.at(digits.size() - 1) = 0;
-//
-//		for (int i = digits.size() - 2; i >= 0; i--)
-//		{
-//			if (flag)
-//			{
-//				(digits.at(i) == 9) ? (digits.at(i) = 0) : (flag = 0, digits.at(i) += 1);
-//			}
-//			else
-//			{
-//				break;
-//			}
-//		}
-//		if (flag)
-//		{
-//			digits.insert(digits.begin(), 1);
-//		}
-//	}
-//	else
-//	{
-//		digits.at(digits.size() - 1) += 1;
-//	}
-//
-//	return digits;
-//}
-//
-//
-//
+struct ListNode {
+	int val;
+	ListNode *next;
+};
 
-
-string addBinary(string a, string b)
+ListNode *create(int A[], int len)
 {
-	reverse(a.begin(), a.end());
-	reverse(b.begin(), b.end());
+	ListNode *aspros, *deferos, *root;
+	aspros = deferos = new ListNode;
+	aspros->val = A[0];
+	aspros->next = NULL;
 
-	int i = 0;
-	int flag = 0;
-	int lenA = a.length();
-	int lenB = b.length();
+	root = NULL;
+	root = aspros;
 
-	string c = "";
-	while (i < lenA && i < lenB)
+	for (int i = 1; i < len; i++)
 	{
-		if (a[i] - '0' + b[i] - '0' + flag >= 2)
+		aspros = new ListNode;
+		aspros->val = A[i];
+		aspros->next = NULL;
+		deferos->next = aspros;
+		deferos = aspros;
+	}
+
+	deferos->next = NULL;
+
+	return root;
+
+}
+
+ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) 
+{
+	if (l1 == NULL && l2 == NULL)
+	{
+		return NULL;
+	}
+
+	if (l1 == NULL || l2 == NULL)
+	{
+		return (l1 == NULL) ? (l2) : (l1);
+	}
+
+	ListNode *aspros, *deferos, *root;
+	aspros = deferos = new ListNode;
+	if (l1->val <= l2->val)
+	{
+		aspros->val = l1->val;
+		aspros->next = NULL;
+		l1 = l1->next;
+	}
+	else
+	{
+		aspros->val = l2->val;
+		aspros->next = NULL;
+		l2 = l2->next;
+	}
+	root = aspros;
+
+	while (l1 && l2)
+	{
+		if (l1->val <= l2->val)
 		{
-			c += (a[i] - '0' + b[i] - '0' + flag) % 2 + '0';
-			flag = 1;
+			aspros = new ListNode;
+			aspros->val = l1->val;
+			aspros->next = NULL;
+			deferos->next = aspros;
+			deferos = aspros;
+			l1 = l1->next;
 		}
 		else
 		{
-			c += a[i] - '0' + b[i] - '0' + flag + '0';
-			flag = 0;
+			aspros = new ListNode;
+			aspros->val = l2->val;
+			aspros->next = NULL;
+			deferos->next = aspros;
+			deferos = aspros;
+			l2 = l2->next;
 		}
-		i++;
 	}
 
-	while (i < lenA)
+	while (l1)
 	{
-		if (a[i] - '0' + flag == 2)
-		{
-			flag = 1;
-			c += "0";
-		}
-		else
-		{
-			c += a[i] - '0' + flag + '0';
-			flag = 0;
-		}
-		i++;
+		aspros = new ListNode;
+		aspros->val = l1->val;
+		aspros->next = NULL;
+		deferos->next = aspros;
+		deferos = aspros;
+		l1 = l1->next;
 	}
 
-	while (i < lenB)
+	while (l2)
 	{
-		if (b[i] - '0' + flag == 2)
-		{
-			flag = 1;
-			c += "0";
-		}
-		else
-		{
-			c += b[i] - '0' + flag + '0';
-			flag = 0;
-		}
-		i++;
+		aspros = new ListNode;
+		aspros->val = l2->val;
+		aspros->next = NULL;
+		deferos->next = aspros;
+		deferos = aspros;
+		l2 = l2->next;
 	}
+	
 
-	if (flag == 1)
+	return root;
+}
+
+void PrintList(ListNode *temp)
+{
+	ListNode *p = temp;
+	while (p)
 	{
-		c += "1";
+		cout << p->val << " ";
+		p = p->next;
 	}
-
-	reverse(c.begin(), c.end());
-
-	return c;
+	cout << endl;
 }
 
 int main()
 {
-	cout << addBinary("1111", "1111") << endl;
+	ListNode *l1 = NULL;
+	ListNode *l2 = NULL;
+	int A[] = { 1, 2, 3, 3, 3, 7 };
+	int B[] = { 4, 5, 9 };
+	int lenA = sizeof(A) / sizeof(A[0]);
+	int lenB = sizeof(B) / sizeof(B[0]);
+
+	l1 = create(A, lenA);
+	l2 = create(B, lenB);
+	
+	ListNode *tmp = mergeTwoLists(NULL, NULL);
+	PrintList(tmp);
 
 	system("PAUSE");
 }

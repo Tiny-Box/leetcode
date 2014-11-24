@@ -11,12 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="No.10.cpp" />
-    <ClCompile Include="No.11.cpp" />
-    <ClCompile Include="No.12.cpp" />
-    <ClCompile Include="No.13.cpp" />
-    <ClCompile Include="No.14.cpp" />
-    <ClCompile Include="No.15.cpp" />
+    <ClCompile Include="No.16.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8393A9EA-530A-4436-8771-397B519D6BEC}</ProjectGuid>

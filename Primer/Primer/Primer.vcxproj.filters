@@ -15,22 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="No.14.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="No.10.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="No.11.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="No.12.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="No.13.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="No.15.cpp">
+    <ClCompile Include="No.16.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
