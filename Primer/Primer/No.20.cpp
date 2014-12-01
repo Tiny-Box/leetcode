@@ -46,16 +46,83 @@
 //
 
 #include<iostream>
-#include<fstream>
-#include<stdexcept>
+#include<string>
 #include<vector>
-#include <time.h>
 
 using namespace std;
 
+vector<int> generateNext(char *str)
+{
+	int len = strlen(str);
+	vector<int> tmp;
+	tmp.push_back(0);
+
+	for (int i = 1, j = 0; i < len; i++)
+	{
+		while (j > 0 && str[i] != str[j])
+		{
+			j = tmp.at(j - 1);
+		}
+
+		if (str[i] == str[j])
+		{
+			j++;
+		}
+
+		tmp.push_back(j);
+	}
+
+	return tmp;
+}
+
+int KMP(char *haystack, char *needle)
+{
+	vector<int> next = generateNext(needle);
+
+	int lenH = strlen(haystack);
+	int lenN = strlen(needle);
+
+	if (lenH == 0 && lenH == lenN)
+	{
+		return 0;
+	}
+	if (lenH < lenN)
+	{
+		return -1;
+	}
+	int i, j;
+
+	for (i = 0, j = 0; i < lenH; i++)
+	{
+		while (j > 0 && haystack[i] != needle[j])
+		{
+			j = next[j - 1];
+		}
+
+		if (haystack[i] == needle[j])
+		{
+			j++;
+		}
+
+		if (j == lenN)
+		{
+			return i - lenN + 1;
+		}
+	}
+	return -1;
+}
+
+
 int main()
 {
+	vector<int> tmp = generateNext("BC");
+	for (vector<int>::iterator i = tmp.begin(); i != tmp.end(); i++)
+	{
+		cout << ' ' << *i;
+	}
+	cout << endl;
 
+	cout << KMP("ABCAB", "BC");
 	getchar();
 	return 0;
 }
