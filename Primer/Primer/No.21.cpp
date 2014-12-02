@@ -51,13 +51,39 @@
 
 using namespace std;
 
-int removeElement(int A[], int n, int elem) {
+int deleteElement(int A[], int begin, int n)
+{
+	for (int i = begin; i < n - 1; i++)
+	{
+		A[i] = A[i + 1];
+	}
+	return n - 1;
+}
 
+int removeElement(int A[], int n, int elem)		{
+	for (int i = 0; i < n; i++)
+	{
+		if (A[i] == elem)
+		{
+			n = deleteElement(A, i, n);
+			i--;
+		}
+	}
+	cout << endl;
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << A[i] << ' ';
+	}
+	cout << endl;
+	return n;
 }
 
 int main()
 {
-	
+	int A[8] = { 1, 2, 3, 4, 5, 2, 7, 8 };
+	int B[2] = { 3, 3 };
+	removeElement(B, 2, 3);
 
 	getchar();
 	return 0;
