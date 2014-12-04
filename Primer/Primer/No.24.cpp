@@ -52,18 +52,76 @@
 #include<queue>
 using namespace std;
 
-struct listnode 
+struct ListNode 
 {
     int val;
-    listnode *next;
-    listnode(int x) : val(x), next(NULL) {}
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
 };
+
+ListNode *create(int *A, int n)
+{
+	ListNode *root;
+	ListNode *tmp;
+	tmp = new ListNode(*A);
+	A++;
+	root = tmp;
+
+	for (int i = 1; i < n; i++)
+	{
+		tmp->next = new ListNode(*A);
+		tmp = tmp->next;
+		A++;
+	}
+
+	return root;
+}
+
+void Print(ListNode *root)
+{
+	while (root != NULL)
+	{
+		cout << root->val << ' ';
+		root = root->next;
+	}
+
+	cout << endl;
+}
+
+ListNode *removeN(ListNode *head, int n)
+{
+	ListNode *aspros = head;
+	ListNode *deferos = head;
+
+	for (int i = 1; i < n; i++)
+	{
+		deferos = deferos->next;
+		if (deferos == NULL)
+			return aspros;
+	}
+
+	if (deferos->next == NULL){
+		return aspros->next;
+	}
+
+	deferos = deferos->next;
+	while (deferos->next != NULL)
+	{
+		aspros = aspros->next;
+		deferos = deferos->next;
+	}
+
+
+	aspros->next = aspros->next->next;
+	return head;
+}
 
 
 int main()
 {
 	int A[8] = { 1, 2, 2, 3, 4, 5, 7, 8 };
 	int B[2] = { 3, 3 };
+	int C[1] = { 1 };
 	queue<int> tmp;
 	tmp.push(2);
 	tmp.push(3);
@@ -81,6 +139,12 @@ int main()
 	cout << test.front() << ' ' << test.back() << endl;
 	test.pop_back();
 	cout << test.front() << ' ' << test.back() << endl;
+
+	ListNode *root = create(C, 1);
+	Print(root);
+
+	root = removeN(root, 1);
+	Print(root);
 
 	getchar();
 	return 0;
