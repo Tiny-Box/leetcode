@@ -51,84 +51,39 @@
 
 using namespace std;
 
-int Atoi(const char *str) 
-{
-	if (str[0] == '\0')
-		return 0;
+string convert(string s, int nRows) {
 
-	vector<double> num;
-	vector<char> mark;
-	double tmp = 0;
-	string ele = "+-";
-	string par = "()";
-	num.push_back(0);
-	int i = 0;
-	while ((str[i] - '0' < 0 || str[i] - '0' > 9) && ele.find(str[i]) == -1 && str[i] != '\0')
+	if (nRows <= 1)
+		return s;
+
+	const int len = (int)s.length();
+	string *str = new string[nRows];
+
+	int row = 0, step = 1;
+	for (int i = 0; i < len; ++i)
 	{
-		if (str[i] == ' ')
-			i++;
-		else
-			return 0;
-	}
-	for (; str[i] != '\0'; i++)
-	{
-		if (ele.find(str[i]) != -1)
-		{
-			mark.push_back(str[i]);
-		}
+		str[row].push_back(s[i]);
 
-		else if (str[i] - '0' >= 0 && str[i] - '0' <= 9)
-		{
+		if (row == 0)
+			step = 1;
+		else if (row == nRows - 1)
+			step = -1;
 
-			tmp = tmp * 10 + str[i] - '0';
-		}
-
-		else
-		{
-			num.push_back(tmp);
-			tmp = 0;
-		}
-
-
+		row += step;
 	}
 
-
-	if (mark.empty() == true)
+	s.clear();
+	for (int j = 0; j < nRows; ++j)
 	{
-		num.erase(num.begin());
-		num.push_back(tmp);
-	}
-	else
-		num.push_back(tmp);
-
-	if (mark.size() >= num.size())
-		return 0;
-
-	tmp = (num[0] > INT_MAX) ? (INT_MAX) : (num[0]);
-	for (int i = 0; i < mark.size(); i++)
-	{
-		if (mark[i] == '+')
-			tmp = (tmp + num[i + 1] < INT_MAX) ? (tmp + num[i + 1]) : (INT_MAX);
-		else
-			tmp = (tmp - num[i + 1] > INT_MIN) ? (tmp - num[i + 1]) : (INT_MIN);
+		s.append(str[j]);
 	}
 
-	return (int)tmp;
+	delete[] str;
+	return s;
 }
-
 void main()
 {
-	//char A[20] = { "    010" };
-	////cin >> A;
-	//cout << Atoi(A);
-	//char A[20] = { "  -0012a42" };
-	//cout << Atoi(A);
-	//char A[20] = { "abc" };
-	//cout << Atoi(A);
-	//char A[20] = { "1" };
-	//cout << Atoi(A);
-	char A[20] = { "    +11191657170" };
-	cout << Atoi(A);
+
 	system("PAUSE");
 }
 
