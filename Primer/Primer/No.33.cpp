@@ -51,31 +51,6 @@
 
 using namespace std;
 
-void QuickSort(vector<int> e, int first, int end)  
-{  
-    int i=first,j=end;  
-    int temp=e[first];//记录第一个数据  
-      
-    while(i<j)  
-  {  
-        while(i<j && e[j]>=temp)  //与first数据比较，右边下标逐渐左移  
-            j--;  
-  
-        e[i]=e[j];        
-  
-        while(i<j && e[i]<=temp)  //与first数据比较，左边下标逐渐右移  
-            i++;          
-  
-        e[j]=e[i];  
-  }  
-    e[i]=temp;                      //将first数据放置于i=j处  
-  
-    if(first<i-1)  
-    QuickSort(e,first,i-1);  
-    if(end>i+1)        
-    QuickSort(e,i+1,end);  
-}  
-
 int getProduct(int A[], int j, int n)
 {
 	int tmp = A[j];
