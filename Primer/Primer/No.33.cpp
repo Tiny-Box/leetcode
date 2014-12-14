@@ -86,10 +86,10 @@ int maxProduct(int A[], int n)
 void main()
 {
 	vector<int> tmp;
-	//int A[7] = { 1, 2, 4, 5, 6, 7, 0 };
-	//maxProduct(A, 7);
-	//int B[5] = { 2, 1, 5, 4, 1 };
-	//maxProduct(B, 5);
+	int A[7] = { 1, 2, 4, 5, 6, 7, 0 };
+	maxProduct(A, 7);
+	int B[5] = { 2, 1, 5, 4, 1 };
+	maxProduct(B, 5);
 
 	int C[3] = { -4, -3, -2 };
 	maxProduct(C, 3);
