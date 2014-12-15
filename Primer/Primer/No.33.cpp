@@ -65,6 +65,12 @@ int getProduct(int A[], int j, int n)
 	return tmp;
 }
 
+int getPro(int left, int right)
+{
+
+
+}
+
 int maxProduct(int A[], int n) 
 {
 	vector<int> Product;
