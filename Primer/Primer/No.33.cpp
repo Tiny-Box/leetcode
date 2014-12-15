@@ -47,14 +47,20 @@
 //
 //
 #include <iostream>
+#include <string>
 #include <vector>
+#include <map>
+#include <algorithm>
 
 using namespace std;
 
-int getProduct(int A[], int j, int n)
+map<string, int> Pro;
+vector<int> Product;
+
+int getProduct(int A[], int p, int q, int n)
 {
-	int tmp = A[j];
-	for (int i = j; i < n-1; i++)
+	int tmp = A[p];
+	for (int i = 0; i < n-1; i++)
 	{
 		if (A[i] <= A[i + 1])
 			tmp *= A[i+1];
@@ -65,11 +71,6 @@ int getProduct(int A[], int j, int n)
 	return tmp;
 }
 
-int getPro(int left, int right)
-{
-
-
-}
 
 int maxProduct(int A[], int n) 
 {
@@ -77,7 +78,7 @@ int maxProduct(int A[], int n)
 	int tmp = 0;
 	for (int i = 0; i < n; i++)
 	{
-		Product.push_back(getProduct(A, i, n));
+		//Product.push_back(getProduct(A, i, n));
 	}
 
 	tmp = Product[0];
@@ -89,17 +90,104 @@ int maxProduct(int A[], int n)
 	return tmp;
 }
 
+//int getProduct_ite(int A[], int i, int j)
+//{
+//	int tmp = A[i];
+//	for (; i < j-1; i++)
+//	{
+//		if (A[i] <= A[i + 1])
+//			tmp *= A[i + 1];
+//		else
+//			return tmp;
+//	}
+//
+//	return tmp;
+//}
+
+int getProduct_ite(int A[], int i, int j, bool &flag)
+{
+	int tmp = A[i];
+	for (; i < j; i++)
+	{
+		if (A[i] <= A[i + 1])
+			tmp *= A[i + 1];
+		else
+		{
+			flag = true;
+			return tmp;
+		}
+			
+	}
+
+	return tmp;
+}
+
+int maxProduct_ite(int A[], int n)
+{
+	Pro.clear();
+	Product.clear();
+	int tmp = 0;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = i + 1; j <= n; j++)
+		{
+			bool flag = false;
+			Product.push_back(getProduct_ite(A, i, j, flag));
+			Pro[to_string(i+1) + "," + to_string(j)] = getProduct_ite(A, i, j, flag);
+			if (flag == true)
+				j = n + 1;
+		}
+	}
+
+	for (vector<int>::iterator i = Product.begin(); i != Product.end(); i++)
+	{
+		cout << *i << ' ';
+	}
+	cout << endl;
+
+	for (map<string, int>::iterator i = Pro.begin(); i != Pro.end(); i++)
+	{
+		cout << i->first << " : " << i->second << endl;
+	}
+	cout << endl;
+
+	tmp = Product[0];
+	for (vector<int>::iterator i = Product.begin() + 1; i != Product.end(); i++)
+	{
+		tmp = (tmp>*i) ? (tmp) : (*i);
+	}
+
+	return tmp;
+}
+
+int maxProduct_c(int A[], int n) {
+	if (n < 1) return 0;
+	int r = A[0];
+	int max_p = A[0];
+	// min存在的意义是为了负数成对的情况下反转
+	int min_p = A[0];
+	for (int i = 1; i<n; i++){
+		int a = max_p*A[i];
+		int b = min_p*A[i];
+		// c存在的意义是为了有零的情况下重启
+		int c = A[i];
+		max_p = max(max(a, b), c);
+		min_p = min(min(a, b), c);
+		if (max_p > r) r = max_p;
+	}
+	return r;
+}
+
 void main()
 {
 	vector<int> tmp;
-	int A[7] = { 1, 2, 4, 5, 6, 7, 0 };
-	maxProduct(A, 7);
-	int B[5] = { 2, 1, 5, 4, 1 };
-	maxProduct(B, 5);
+	int A[7] = { 1, 2, 0, 5, 6, 7, 8 };
+	maxProduct_c(A, 7);
+	int B[5] = { 2, -2, 5, -4, 1 };
+	maxProduct_c(B, 5);
 
 	int C[3] = { -4, -3, -2 };
-	maxProduct(C, 3);
-
+	maxProduct_c(C, 3);
 
 	system("PAUSE");
 }
