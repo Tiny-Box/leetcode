@@ -54,15 +54,6 @@
 
 using namespace std;
 
-int getWord(string s, int i, string &word)
-{
-	while (s[i] != ' ' && i < s.size())
-	{
-		word += s[i++];
-	}
-	return i;
-}
-
 void reverseWords(string &s) 
 {
 	if (s == "")
@@ -70,32 +61,23 @@ void reverseWords(string &s)
 		return;
 	}
 	string word = "";
-	vector<string> wordlist;
+	string tmp = "";
 
 	for (int i = 0; i < s.size(); i++)
 	{
 		if (s[i] != ' ')
 		{
-			i = getWord(s, i, word);
-			wordlist.push_back(word);
+			while (s[i] != ' ' && i < s.size())
+			{
+				word += s[i++];
+			}
+			tmp = word + " " + tmp;
 			word = "";
 		}
 	}
-
-	if (wordlist.empty())
-	{
-		s = "";
-		return;
-	}
-
-	string tmp = wordlist[wordlist.size() - 1];
-	for (int i = wordlist.size() - 2; i >= 0; i--)
-	{
-		tmp += " " + wordlist[i];
-	}
+	tmp.erase(tmp.size() - 1);
 
 	s = tmp;
-
 }
 
 void main()
