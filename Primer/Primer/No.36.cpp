@@ -63,7 +63,10 @@ struct ListNode
 	ListNode(int x) :val(x), next(NULL){}
 };
 
+ListNode *create(int A[], int n)
+{
 
+}
 
 void main()
 {
