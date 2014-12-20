@@ -49,10 +49,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
-#include <algorithm>
-#include <stack>
-#include <cctype>
+#include <set>
+#include <queue>
 
 using namespace std;
 
@@ -63,14 +61,120 @@ struct ListNode
 	ListNode(int x) :val(x), next(NULL){}
 };
 
+//struct cmp
+//{
+//	bool operator()(const int &a, const int &b)
+//	{
+//		return a - b < 0;
+//	}
+//};
+
 ListNode *create(int A[], int n)
 {
+	ListNode *aspros, *deferos, *head;
+	int i = 0;
+	head = NULL;
+	deferos = NULL;
+	for (int i = 0; i < n; i++)
+	{
+		aspros = new ListNode(A[i]);
+		if (i == 0)
+			head = aspros;
+		else
+		{
+			deferos->next = aspros;
+		}
+		deferos = aspros;
+	}
+	deferos->next = NULL;
 
+	return head;
 }
+
+void printlist(ListNode *head)
+{
+	ListNode *tmp;
+	tmp = head;
+	while (tmp != NULL)
+	{
+		cout << tmp->val << ' ';
+		tmp = tmp->next;
+	}
+	cout << endl;
+	//tmp = head;
+	//set<int, cmp> g;
+	//while (tmp != NULL)
+	//{
+	//	g.insert(tmp->val);
+	//	tmp = tmp->next;
+	//}
+	//for (set<int, cmp>::iterator i = g.begin(); i != g.end(); i++)
+	//{
+	//	cout << *i << ' ';
+	//}
+	//cout << endl;
+}
+
+class Solution {
+public:
+	struct cmp
+	{
+		bool operator()(const int &a, const int &b)
+		{
+			return a - b > 0;
+		}
+	};
+
+	ListNode *sortList(ListNode *head)
+	{
+		if (head == NULL)
+		{
+			return NULL;
+		}
+
+		ListNode *tmp;
+		tmp = head;
+		/*set<int, cmp> g;*/
+		priority_queue<int, vector<int>, cmp> g;
+		while (tmp != NULL)
+		{
+			g.push(tmp->val);
+			tmp = tmp->next;
+		}
+
+		// Unit test
+		//while (!g.empty())
+		//{
+		//	cout << g.top() << ' ';
+		//	g.pop();
+		//}
+
+		ListNode *aspros, *deferos, *root;
+		root = NULL;
+		aspros = new ListNode(g.top());
+		g.pop();
+		root = aspros;
+		deferos = aspros;
+		for (; !g.empty(); g.pop())
+		{
+			aspros = new ListNode(g.top());
+			deferos->next = aspros;
+			deferos = aspros;
+		}
+		deferos->next = NULL;
+
+		return root;
+	}
+};
 
 void main()
 {
-
+	int A[10] = { 4, 19, 14, 5, -3, 1, 8, 5, 11, 15 };
+	ListNode *root = create(A, 10);
+	printlist(root);
+	Solution B;
+  	root = B.sortList(root);
+	printlist(root);
 	system("PAUSE");
 }
 
