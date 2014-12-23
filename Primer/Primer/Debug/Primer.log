@@ -1,4 +1,4 @@
-﻿生成启动时间为 2014/12/23 23:16:38。
+﻿生成启动时间为 2014/12/24 1:06:41。
      1>项目“C:\Users\Box\Source\Repos\leetcode\Primer\Primer\Primer.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /D _MBCS /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt No.39.cpp
@@ -10,4 +10,4 @@
 
 生成成功。
 
-已用时间 00:00:02.65
+已用时间 00:00:01.88

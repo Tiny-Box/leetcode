@@ -166,35 +166,34 @@ int countlist(ListNode *root)
 	return n;
 }
 
-ListNode *modifylist(ListNode *quickptr, int i, int n, ListNode *head)
+ListNode *modifylist(ListNode *quickptr, ListNode *head)
 {
-	if (i >= n)
+	if (quickptr->next == NULL)
+	{
 		return head;
+	}
 
 	ListNode *back, *parent, *slowptr;
 	back = quickptr;
 	parent = back->next;
 	slowptr = head;
 
-	slowptr = modifylist(parent, i + 1, n, head);
+	slowptr = modifylist(parent, head);
 
-	if (i >= (n + n % 2) / 2 && parent->next != NULL)
+	if (slowptr == quickptr || slowptr == parent)
+	{
+		return slowptr;
+	}
+
+	else if (parent->next == NULL)
 	{
 		ListNode *newnode = new ListNode(parent->val);
 		newnode->next = slowptr->next;
 		slowptr->next = newnode;
 		slowptr = newnode->next;
-		if (back == slowptr)
-		{
-			newnode->next = NULL;
-			return slowptr;
-		}
-		else
-		{
-			back->next = NULL;
-			return slowptr;
-		}
+		back->next = NULL;
 		delete parent;
+		return slowptr;
 	}
 
 	return slowptr;
@@ -249,16 +248,15 @@ void Unittest(ListNode *root)
 
 void ReorderList(ListNode *head)
 {
-	if (head == NULL)
+	if (head == NULL || head->next == NULL)
 		return;
-	int n = countlist(head);
-	modifylist(head, 1, n, head);
+	modifylist(head, head);
 }
 
 
 void main()
 {
-	int A[10] = { 4, 19, 14, 5, -3, 1, 8, 5, 11, 15 };
+	int A[9] = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
 	int B[3] = { 1, 2, 3 };
 	int C[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int D[2] = { 1, 2 };
