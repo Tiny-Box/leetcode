@@ -67,6 +67,8 @@ bool wordBreak(string s, unordered_set<string> &dict)
 
 	for (unordered_set<string>::iterator i = dict.begin(); i != dict.end(); i++)
 		hash[(*i)[0]].push_back(*i);
+
+	return true;
 }
 
 void Unittest()
