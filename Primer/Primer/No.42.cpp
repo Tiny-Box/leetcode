@@ -98,7 +98,7 @@ bool wordBreak(string s, unordered_set<string> &dict)
 	{
 		string::iterator tmp = i;
 		i = wordSearch(i, hash[*i]);
-		if (tmp == )
+		if (tmp == i)
 		{
 
 		}
