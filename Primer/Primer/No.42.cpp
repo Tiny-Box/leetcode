@@ -56,34 +56,61 @@
 
 using namespace std;
 
-string::iterator wordSearch(string::iterator i, vector<string> tmp)
+//string::iterator wordSearch(string::iterator i, vector<string> tmp)
+//{
+//	string::iterator slow = i;
+//	string::iterator quick = i;
+//	bool flag = false;
+//
+//	for (vector<string>::iterator i = tmp.begin(); i != tmp.end(); i++)
+//	{
+//		string::iterator j = (*i).begin();
+//		for (; j != (*i).end(); j++, quick++)
+//		{
+//			flag = (*j == *quick);
+//			if (flag == false)
+//			{
+//				quick = slow;
+//				break;
+//			}
+//		}
+//		if (flag == true)
+//			return quick + 1;
+//	}
+//
+//	return slow;
+//}
+
+string wordSearch(string s, int i, vector<string> tmp)
 {
-	string::iterator slow = i;
-	string::iterator quick = i;
+	int slow = i;
+	int quick = i;
 	bool flag = false;
 
-	for (vector<string>::iterator i = tmp.begin(); i != tmp.end(); i++)
+	for (vector<string>::iterator j = tmp.begin(); j != tmp.end(); j++)
 	{
-		string::iterator j = (*i).begin();
-		for (; j != (*i).end(); j++, quick++)
+		for (string::iterator k = (*j).begin(); k != (*j).end(); k++)
 		{
-			flag = (*j == *quick);
+			flag = (*k == s[quick]);
 			if (flag == false)
 			{
 				quick = slow;
 				break;
 			}
+			else
+				quick++;
 		}
 		if (flag == true)
-			return quick + 1;
+			return (*j);
 	}
 
-	return slow;
+	return "";
 }
 
 bool wordBreak(string s, unordered_set<string> &dict) 
 {
 	map < char, vector<string> > hash;
+	int length = s.length();
 	for (size_t i = 0; i < 26; i++)
 	{
 		vector<string> tmp;
@@ -93,20 +120,41 @@ bool wordBreak(string s, unordered_set<string> &dict)
 	for (unordered_set<string>::iterator i = dict.begin(); i != dict.end(); i++)
 		hash[(*i)[0]].push_back(*i);
 
-	map< char, vector<string> >::iterator j = hash.begin();
-	for (string::iterator i = s.begin(); i != s.end(); j++)
-	{
-		string::iterator tmp = i;
-		i = wordSearch(i, hash[*i]);
-		if (tmp == i)
+	//map< char, vector<string> >::iterator j = hash.begin();
+	//for (string::iterator i = s.begin(); i != s.end(); j++)
+	//{
+	//	string::iterator tmp = i;
+	//	i = wordSearch(i, hash[*i]);
+	//	if (tmp == i)
+	//		return false;
 
+	//}
+
+	for (size_t i = 0; i < length; )
+	{
+		string j = wordSearch(s, i, hash[s[i]]);
+		if (j != "")
+			i += j.length();
+		else
+			return false;
 	}
 	return true;
 }
 
-void Unittest()
+void Unittest(string s, string *d, int n)
 {
-	map < char, vector<string> > hash;
+
+	unordered_set<string> dict;
+	
+	for (size_t i = 0; i < n; i++)
+	{
+		dict.insert(d[i]);
+	}
+
+	if (wordBreak(s, dict))
+		cout << "Yes!" << endl;
+	else
+		cout << "No!" << endl;
 	
 }
 
@@ -118,6 +166,13 @@ void main()
 	int C[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int D[2] = { 1, 2 };
 	int E[1] = { 1 };
+
+	string s = "leetcodelet";
+	string d[3] = { "leet", "let", "code" };
+	Unittest(s, d, 3);
+	string a = "a";
+	string b[1] = { "a" };
+	Unittest(a, b, 1);
 	system("PAUSE");
 }
 
