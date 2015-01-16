@@ -56,31 +56,6 @@
 
 using namespace std;
 
-//string::iterator wordSearch(string::iterator i, vector<string> tmp)
-//{
-//	string::iterator slow = i;
-//	string::iterator quick = i;
-//	bool flag = false;
-//
-//	for (vector<string>::iterator i = tmp.begin(); i != tmp.end(); i++)
-//	{
-//		string::iterator j = (*i).begin();
-//		for (; j != (*i).end(); j++, quick++)
-//		{
-//			flag = (*j == *quick);
-//			if (flag == false)
-//			{
-//				quick = slow;
-//				break;
-//			}
-//		}
-//		if (flag == true)
-//			return quick + 1;
-//	}
-//
-//	return slow;
-//}
-
 string wordSearch(string s, int i, vector<string> tmp)
 {
 	int slow = i;
@@ -120,15 +95,6 @@ bool wordBreak(string s, unordered_set<string> &dict)
 	for (unordered_set<string>::iterator i = dict.begin(); i != dict.end(); i++)
 		hash[(*i)[0]].push_back(*i);
 
-	//map< char, vector<string> >::iterator j = hash.begin();
-	//for (string::iterator i = s.begin(); i != s.end(); j++)
-	//{
-	//	string::iterator tmp = i;
-	//	i = wordSearch(i, hash[*i]);
-	//	if (tmp == i)
-	//		return false;
-
-	//}
 
 	for (size_t i = 0; i < length; )
 	{
