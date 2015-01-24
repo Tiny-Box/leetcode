@@ -56,6 +56,13 @@
 
 using namespace std;
 
+
+//伪代码思路
+//for (里面是vector)
+// true 
+//	into
+// false
+//	return
 string wordSearch(string s, int i, vector<string> tmp)
 {
 	int slow = i;
