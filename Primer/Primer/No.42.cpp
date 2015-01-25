@@ -63,31 +63,61 @@ using namespace std;
 //	into
 // false
 //	return
-string wordSearch(string s, int i, vector<string> tmp)
+bool cmp(string s, int i, string needle)
 {
-	int slow = i;
-	int quick = i;
-	bool flag = false;
+	if (i > s.length())
+		return false;
 
-	for (vector<string>::iterator j = tmp.begin(); j != tmp.end(); j++)
+	int len = needle.length();
+	for (int j = 0; j < len; j++)
 	{
-		for (string::iterator k = (*j).begin(); k != (*j).end(); k++)
-		{
-			flag = (*k == s[quick]);
-			if (flag == false)
-			{
-				quick = slow;
-				break;
-			}
-			else
-				quick++;
-		}
-		if (flag == true)
-			return (*j);
+		if (s[j + i] != needle.at(j))
+			return false;
 	}
 
-	return "";
+	return true;
 }
+
+int worddp(string s, int i, map < char, vector<string> > hash)
+{
+	if (i == s.length())
+		return i;
+
+	for (vector<string>::iterator j = hash[s[i]].begin(); j != hash[s[i]].end(); j++)
+	{
+		if (cmp(s, i, *j))
+			i = worddp(s, i + (*j).length(), hash);
+
+	}
+
+	return i;
+}
+
+//string wordSearch(string s, int i, vector<string> tmp)
+//{
+//	int slow = i;
+//	int quick = i;
+//	bool flag = false;
+//
+//	for (vector<string>::iterator j = tmp.begin(); j != tmp.end(); j++)
+//	{
+//		for (string::iterator k = (*j).begin(); k != (*j).end(); k++)
+//		{
+//			flag = (*k == s[quick]);
+//			if (flag == false)
+//			{
+//				quick = slow;
+//				break;
+//			}
+//			else
+//				quick++;
+//		}
+//		if (flag == true)
+//			return (*j);
+//	}
+//
+//	return "";
+//}
 
 bool wordBreak(string s, unordered_set<string> &dict) 
 {
@@ -103,7 +133,7 @@ bool wordBreak(string s, unordered_set<string> &dict)
 		hash[(*i)[0]].push_back(*i);
 
 
-	for (size_t i = 0; i < length; )
+	/*for (size_t i = 0; i < length; )
 	{
 		string j = wordSearch(s, i, hash[s[i]]);
 		if (j != "")
@@ -111,7 +141,13 @@ bool wordBreak(string s, unordered_set<string> &dict)
 		else
 			return false;
 	}
-	return true;
+	return true;*/
+	int i = 0;
+	i = worddp(s, i, hash);
+	if (i == s.length())
+		return true;
+	else
+		return false;
 }
 
 void Unittest(string s, string *d, int n)
