@@ -56,13 +56,6 @@
 
 using namespace std;
 
-
-//伪代码思路
-//for (里面是vector)
-// true 
-//	into
-// false
-//	return
 bool cmp(string s, int i, string needle)
 {
 	if (i > s.length())
@@ -83,41 +76,21 @@ int worddp(string s, int i, map < char, vector<string> > hash)
 	if (i == s.length())
 		return i;
 
-	for (vector<string>::iterator j = hash[s[i]].begin(); j != hash[s[i]].end(); j++)
-	{
-		if (cmp(s, i, *j))
-			i = worddp(s, i + (*j).length(), hash);
+	//for (vector<string>::iterator j = hash[s[i]].begin(); j != hash[s[i]].end(); j++)
+	//{
+	//	if (cmp(s, i, *j))
+	//		return worddp(s, i + (*j).length(), hash);
 
+	//}
+	int len = hash[s[i]].size();
+	for (int j = 0; j < len; j++)
+	{
+		if (cmp(s, i, hash[s[i]][j]))
+			return worddp(s, i + hash[s[i]][j].length(), hash);
 	}
 
 	return i;
 }
-
-//string wordSearch(string s, int i, vector<string> tmp)
-//{
-//	int slow = i;
-//	int quick = i;
-//	bool flag = false;
-//
-//	for (vector<string>::iterator j = tmp.begin(); j != tmp.end(); j++)
-//	{
-//		for (string::iterator k = (*j).begin(); k != (*j).end(); k++)
-//		{
-//			flag = (*k == s[quick]);
-//			if (flag == false)
-//			{
-//				quick = slow;
-//				break;
-//			}
-//			else
-//				quick++;
-//		}
-//		if (flag == true)
-//			return (*j);
-//	}
-//
-//	return "";
-//}
 
 bool wordBreak(string s, unordered_set<string> &dict) 
 {
@@ -132,22 +105,9 @@ bool wordBreak(string s, unordered_set<string> &dict)
 	for (unordered_set<string>::iterator i = dict.begin(); i != dict.end(); i++)
 		hash[(*i)[0]].push_back(*i);
 
-
-	/*for (size_t i = 0; i < length; )
-	{
-		string j = wordSearch(s, i, hash[s[i]]);
-		if (j != "")
-			i += j.length();
-		else
-			return false;
-	}
-	return true;*/
 	int i = 0;
 	i = worddp(s, i, hash);
-	if (i == s.length())
-		return true;
-	else
-		return false;
+	return i == s.length();
 }
 
 void Unittest(string s, string *d, int n)
@@ -170,18 +130,16 @@ void Unittest(string s, string *d, int n)
 
 void main()
 {
-	int A[9] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-	int B[3] = { 1, 2, 3 };
-	int C[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-	int D[2] = { 1, 2 };
-	int E[1] = { 1 };
+	string a = "abcd";
+	string c[4] = { "a", "abc", "b", "cd" };
+	Unittest(a, c, 4);
+	//string s = "leetcodelet";
+	//string d[3] = { "leet", "let", "code" };
+	//Unittest(s, d, 3);
+	//string a = "a";
+	//string b[1] = { "a" };
+	//Unittest(a, b, 1);
 
-	string s = "leetcodelet";
-	string d[3] = { "leet", "let", "code" };
-	Unittest(s, d, 3);
-	string a = "a";
-	string b[1] = { "a" };
-	Unittest(a, b, 1);
 	system("PAUSE");
 }
 
