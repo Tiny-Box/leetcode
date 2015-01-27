@@ -51,7 +51,7 @@
 
 using namespace std;
 
-int singleNumber(int A[], int n) 
+int singleNumber(int A[], int n)
 {
 	map<int, int> hash;
 

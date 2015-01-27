@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="No.43.cpp" />
+    <ClCompile Include="No.44.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8393A9EA-530A-4436-8771-397B519D6BEC}</ProjectGuid>
