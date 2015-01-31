@@ -92,11 +92,8 @@ void vectorout(vector<string> v)
 	}
 }
 
-string sortv(std::vector<string> v, char i)
+string sortv(std::vector<string> v)
 {
-	if (i == '0')
-		return "0";
-
 	sort(v.begin(), v.end(), cmp);
 
 	string tmp = "";
@@ -131,7 +128,7 @@ string largestNumber(vector<int> &num)
 	for (set<char>::reverse_iterator i = first.rbegin(); i != first.rend(); ++i)
 	{
 		/* code */
-		lnumber += sortv(hash[*i], *i);
+		lnumber += sortv(hash[*i]);
 		//cout << "lnumber is : " << lnumber << endl;
 	}
 
@@ -152,6 +149,9 @@ string largestNumber(vector<int> &num)
 	 //	cout << *i << " " ;
 	 //	cout << endl;
 	 //}
+	if (lnumber[0] == '0')
+		return "0";
+
 	return lnumber;
 }
 
