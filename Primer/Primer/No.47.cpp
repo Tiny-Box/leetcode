@@ -125,6 +125,21 @@ bool isRepeating(int numerator,int denominator)
     return false;  
 }  
 
+string decpart(int n, int d)
+{
+	char c;
+	c = (n *= 10) / d + '0';
+	string tmp = "";
+	tmp += c;
+
+	while (n % d == 0)
+	{
+		if (c == n / d + '0')
+		{
+
+		}
+	}
+}
 
 string fractionToDecimal(int numerator, int denominator) 
 {
