@@ -131,14 +131,36 @@ string decpart(int n, int d)
 	c = (n *= 10) / d + '0';
 	string tmp = "";
 	tmp += c;
+	map<string, int> hash;
 
-	while (n % d == 0)
+	n = n % d;
+	while ( n % d != 0)
 	{
 		if (c == n / d + '0')
 		{
+			if (hash[tmp] == 1)
+			{
+				tmp = "";
+				for (map<string, int>::iterator i = hash.begin(); i != hash.end(); i++)
+					tmp += (*i).first;
+				return tmp;
+			}
+			else
+			{
+				hash[tmp] = 1;
+				tmp = "";
+			}
 
 		}
+		else
+		{
+			tmp += n / d + '0';
+ 			n = n % d;
+		}
+		n *= 10;
 	}
+	tmp += n / d + '0';
+	return tmp;
 }
 
 string fractionToDecimal(int numerator, int denominator) 
@@ -165,10 +187,11 @@ int main(int argc, char const *argv[])
 	int a = 100;
 	int b = 59;
 	cout << (isRepeating(a, b) ? ("Yes") : ("No")) << endl;
+	cout << decpart(1, 7) << endl;
 	//cout << fractionToDecimal(a, b) << endl;
-	double c = double(a) / double(b);
-	DIV(a, b, 200);
-	cout << c << endl;
+	//double c = double(a) / double(b);
+	//DIV(a, b, 200);
+	//cout << c << endl;
 	system("pause");
 	return 0;
 }
