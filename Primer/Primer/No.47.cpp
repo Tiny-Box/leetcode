@@ -72,6 +72,20 @@ void DIV(int divident, int divisor, int precision)
 	cout << "\n";
 }
 
+string itoa_t(int n)
+{
+	if (n == 0)	return "0";
+
+	string tmp = "";
+	for (; n != 0; n /= 10)
+	{
+		char a = n % 10 + '0';
+		tmp = a + tmp;
+	}
+
+	return tmp;
+}
+
 bool isPrime(int n)  
 {  
     if(n==1||n==2||n==3)    return true;  
@@ -125,7 +139,7 @@ bool isRepeating(int numerator,int denominator)
     return false;  
 }  
 
-string decpart(int n, int d)
+string Decpart(int n, int d)
 {
 	char c;
 	c = (n *= 10) / d + '0';
@@ -136,48 +150,50 @@ string decpart(int n, int d)
 	n = n % d;
 	while ( n % d != 0)
 	{
-		if (c == n / d + '0')
+		if (c == n * 10 / d + '0')
 		{
 			if (hash[tmp] == 1)
 			{
 				tmp = "";
 				for (map<string, int>::iterator i = hash.begin(); i != hash.end(); i++)
 					tmp += (*i).first;
-				return tmp;
+				return "(" + tmp + ")";
+
 			}
 			else
 			{
 				hash[tmp] = 1;
-				tmp = "";
+				tmp = n * 10 / d + '0';
+				n = (n * 10) % d;
 			}
 
 		}
 		else
 		{
-			tmp += n / d + '0';
- 			n = n % d;
+			tmp += n * 10 / d + '0';
+ 			n = (n * 10) % d;
 		}
-		n *= 10;
+
 	}
-	tmp += n / d + '0';
+	//tmp += n / d + '0';
 	return tmp;
 }
 
 string fractionToDecimal(int numerator, int denominator) 
 {
 	string intpart = "";
+	string decpart = "";
 
-	if (numerator >= denominator)
-	{
-		char tmp[20];
-		_itoa_s(numerator / denominator, tmp, 10);
-		intpart = tmp;
-		
-	}
-
+	//if (numerator >= denominator)
+	//{
+	//	intpart = itoa_t(numerator / denominator);
+	//	
+	//}
+	intpart = itoa_t(numerator / denominator);
+	decpart = Decpart(numerator % denominator, denominator);
 	
 
-	return intpart;
+	return intpart + "." + decpart;
 }
 
 
@@ -186,8 +202,9 @@ int main(int argc, char const *argv[])
 {
 	int a = 100;
 	int b = 59;
-	cout << (isRepeating(a, b) ? ("Yes") : ("No")) << endl;
-	cout << decpart(1, 7) << endl;
+	cout << fractionToDecimal(1, 8) << endl;
+	cout << fractionToDecimal(100, 11) << endl;
+	cout << itoa_t(255) << endl;
 	//cout << fractionToDecimal(a, b) << endl;
 	//double c = double(a) / double(b);
 	//DIV(a, b, 200);
