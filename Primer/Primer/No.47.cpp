@@ -52,6 +52,7 @@
 #include <map>
 #include <vector>
 #include <set>
+#include <queue>
 
 using namespace std;
 
@@ -86,58 +87,58 @@ string itoa_t(int n)
 	return tmp;
 }
 
-bool isPrime(int n)  
-{  
-    if(n==1||n==2||n==3)    return true;  
-    for(int i =2 ;i<n;i++)  
-    {  
-        if(n%i==0)  return false;  
-    }  
-    return true;  
-} 
-
-
-bool isRepeating(int numerator,int denominator)  
-{  
-    int simpleNum = 0;  
-    int simpleDen = 0;  
-    if(numerator<denominator)  
-    {  
-        for(int i = numerator;i>0;i--)  
-        {  
-            if(numerator%i==0&&denominator%i==0)  
-            {  
-                simpleNum = numerator/i;  
-                simpleDen = denominator/i;  
-                break;  
-            }  
-        }  
-    }  
-    else  
-    {  
-        for(int i = denominator;i>0;i--)  
-        {  
-            if(numerator%i==0&&denominator%i==0)  
-            {  
-                simpleNum = numerator/i;  
-                simpleDen = denominator/i;  
-                break;  
-            }  
-        }  
-    }  
-    //如果分数化简后分母除了2,5之外还有素因数，就是无限循环小数  
-    for(int i = 2;i<=simpleDen;i++)  
-    {  
-        if(simpleDen%i==0)  
-        {  
-            if(isPrime(i))  
-            {  
-                if(i!=2&&i!=5)  return true;  
-            }  
-        }  
-    }  
-    return false;  
-}  
+//bool isPrime(int n)  
+//{  
+//    if(n==1||n==2||n==3)    return true;  
+//    for(int i =2 ;i<n;i++)  
+//    {  
+//        if(n%i==0)  return false;  
+//    }  
+//    return true;  
+//} 
+//
+//
+//bool isRepeating(int numerator,int denominator)  
+//{  
+//    int simpleNum = 0;  
+//    int simpleDen = 0;  
+//    if(numerator<denominator)  
+//    {  
+//        for(int i = numerator;i>0;i--)  
+//        {  
+//            if(numerator%i==0&&denominator%i==0)  
+//            {  
+//                simpleNum = numerator/i;  
+//                simpleDen = denominator/i;  
+//                break;  
+//            }  
+//        }  
+//    }  
+//    else  
+//    {  
+//        for(int i = denominator;i>0;i--)  
+//        {  
+//            if(numerator%i==0&&denominator%i==0)  
+//            {  
+//                simpleNum = numerator/i;  
+//                simpleDen = denominator/i;  
+//                break;  
+//            }  
+//        }  
+//    }  
+//    //如果分数化简后分母除了2,5之外还有素因数，就是无限循环小数  
+//    for(int i = 2;i<=simpleDen;i++)  
+//    {  
+//        if(simpleDen%i==0)  
+//        {  
+//            if(isPrime(i))  
+//            {  
+//                if(i!=2&&i!=5)  return true;  
+//            }  
+//        }  
+//    }  
+//    return false;  
+//}  
 
 string Decpart(int n, int d)
 {
@@ -145,24 +146,29 @@ string Decpart(int n, int d)
 	c = (n *= 10) / d + '0';
 	string tmp = "";
 	tmp += c;
-	map<string, int> hash;
+	queue<string> hash;
+	//map<string, int> hash;
 
 	n = n % d;
 	while ( n % d != 0)
 	{
 		if (c == n * 10 / d + '0')
 		{
-			if (hash[tmp] == 1)
+			if (hash.size() != 0 && tmp.compare(hash.front()) == 0)
 			{
 				tmp = "";
-				for (map<string, int>::iterator i = hash.begin(); i != hash.end(); i++)
-					tmp += (*i).first;
+				int length = hash.size();
+				for (size_t i = 0; i < length; i++)
+				{
+					tmp += hash.front();
+					hash.pop();
+				}
 				return "(" + tmp + ")";
 
 			}
 			else
 			{
-				hash[tmp] = 1;
+				hash.push(tmp);
 				tmp = n * 10 / d + '0';
 				n = (n * 10) % d;
 			}
@@ -181,8 +187,13 @@ string Decpart(int n, int d)
 
 string fractionToDecimal(int numerator, int denominator) 
 {
+	string flag = "";
 	string intpart = "";
 	string decpart = "";
+
+	flag = (numerator * denominator > 0) ? ("") : ("-");
+	numerator = abs(numerator);
+	denominator = abs(denominator);
 
 	//if (numerator >= denominator)
 	//{
@@ -193,16 +204,32 @@ string fractionToDecimal(int numerator, int denominator)
 	decpart = Decpart(numerator % denominator, denominator);
 	
 
-	return intpart + "." + decpart;
+	return flag + intpart + "." + decpart;
 }
 
 
 
 int main(int argc, char const *argv[])
 {
-	int a = 100;
-	int b = 59;
-	cout << fractionToDecimal(1, 8) << endl;
+	//int a = 100;
+	//int b = 59;
+	//queue<string> test;
+	//test.push("1");
+	//test.push("2");
+	//test.push("3");
+	//test.push("4");
+
+	//cout << test.front() << endl;
+
+	//int length = test.size();
+
+	//for (size_t i = 0; i < length; i++)
+	//{
+	//	cout << test.front() << endl;
+	//	test.pop();
+	//}
+
+	cout << fractionToDecimal(-1, 8) << endl;
 	cout << fractionToDecimal(100, 11) << endl;
 	cout << itoa_t(255) << endl;
 	//cout << fractionToDecimal(a, b) << endl;
