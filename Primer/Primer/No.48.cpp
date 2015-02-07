@@ -70,25 +70,53 @@ vector<vector<string>> partition(string s)
 	vector<string> tmp;
 
 	string a = "";
+	string b = "";
+
+	//for (string::iterator i = s.begin(); i != s.end(); i++)
+	//{
+	//	for (string::iterator j = i; j != s.end(); j++)
+	//	{
+	//		a += *j;
+	//		if (isPalindrome(a))
+	//			tmp.push_back(a);
+	//		else
+	//		{
+	//			a = *j;
+	//			j--;
+	//			//break;
+	//		}
+	//	}
+
+	//	hash.push_back(tmp);
+	//	a = "";
+	//	tmp.clear();
+	//}
 
 	for (string::iterator i = s.begin(); i != s.end(); i++)
 	{
+		b += *i;
+		if (i != s.begin() && i != s.end())
+		{
+			tmp.push_back(b);
+		}
 		for (string::iterator j = i; j != s.end(); j++)
 		{
-			a += *j;
-			if (isPalindrome(a))
-				tmp.push_back(a);
+			if (isPalindrome(a + *j))
+			{
+				a += *j;
+			}
 			else
 			{
+				tmp.push_back(a);
 				a = *j;
-				j--;
-				//break;
 			}
 		}
 
+		tmp.push_back(a);
 		hash.push_back(tmp);
 		a = "";
 		tmp.clear();
+
 	}
 
 	for (size_t i = 0; i < hash.size(); i++)
