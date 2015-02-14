@@ -64,6 +64,14 @@ void solve(vector<vector<char>> &board) {
 	{
 		for (size_t j = 0; j < row; j++)
 		{
+
+		}
+	}
+
+	for (size_t i = 0; i < col; i++)
+	{
+		for (size_t j = 0; j < row; j++)
+		{
 			cout << board[j][i] << " ";
 		}
 		cout << endl;
@@ -75,8 +83,10 @@ int main()
 {
 	vector<vector<char>> board(5, vector<char>(3, 'x'));
 
+
 	solve(board);
 
 	system("pause");
 	return 0;
 }
+
