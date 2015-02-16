@@ -56,33 +56,177 @@
 
 using namespace std;
 
-void solve(vector<vector<char>> &board) {
-	int col = board[0].size();
-	int row = board.size();
+int idx[4][4];
 
-	for (size_t i = 0; i < col; i++)
+void edgedfs(int r, int c, vector<vector<char>> &board, int m, int n)
+{
+	if (r < 0 || r >= m || c < 0 || c >= n)	return;
+	if (idx[r][c] == -1 || board[r][c] != 'o') return;
+	idx[r][c] = -1;
+	for (size_t dr = -1; dr <= 1; dr++)
 	{
-		for (size_t j = 0; j < row; j++)
+		for (size_t dc = -1; dc <= 1; dc++)
 		{
-
+			if (dr == 0 || dc == 0) edgedfs(r + dr, c + dc, board, m, n);
 		}
 	}
+}
 
-	for (size_t i = 0; i < col; i++)
+void dfs(int r, int c, int m, int n, vector<vector<char>> &board)
+{
+	if (r < 0 || r >= m || c < 0 || c >= n)	return;
+	if (idx[r][c] == -1 || board[r][c] != 'o') return;
+	board[r][c] = 'x';
+	idx[r][c] = 1;
+	for (size_t dr = -1; dr <= 1; dr++)
 	{
-		for (size_t j = 0; j < row; j++)
+		for (size_t dc = -1; dc <= 1; dc++)
 		{
-			cout << board[j][i] << " ";
+			if (dr == 0 || dc == 0) dfs(r + dr, c + dc, m, n, board);
+		}
+	}
+}
+
+void solve(vector<vector<char>> &board) {
+
+
+	//memset(idx, 0, sizeof(idx));
+	int n = board.size();
+	int m = board[0].size();
+	//if (n != 0)
+	//{
+	//	int m = board[0].size();
+	//	for (size_t i = 0; i < m; i++)
+	//	{
+	//		edgedfs(i, n - 1, board, m, n);
+	//		edgedfs(i, 0, board, m, n);
+	//	}
+	//	for (size_t i = 0; i < n; i++)
+	//	{
+	//		edgedfs(0, i, board, m, n);
+	//		edgedfs(m - 1, i, board, m, n);
+	//	}
+
+	//	for (size_t i = 0; i < m; i++)
+	//	{
+	//		for (size_t j = 0; j < n; j++)
+	//		{
+	//			if (idx[i][j] == 0 && board[i][j] == 'o') dfs(i, j, m, n, board);
+	//		}
+	//	}
+
+	//	//for (size_t i = 0; i < m; i++)
+	//	//{
+	//	//	for (size_t j = 0; j < n; j++)
+	//	//	{
+	//	//		cout << board[i][j] << " ";
+	//	//	}
+	//	//	cout << endl;
+	//	//}
+
+	//	//for (size_t i = 0; i < m; i++)
+	//	//{
+	//	//	for (size_t j = 0; j < n; j++)
+	//	//	{
+	//	//		cout << idx[i][j] << " ";
+	//	//	}
+	//	//	cout << endl;
+	//	//}
+	//}
+
+	for (size_t i = 0; i < n; i++)
+	{
+		for (size_t j = 0; j < m; j++)
+		{
+			cout << board[i][j] << " ";
 		}
 		cout << endl;
 	}
 
+	for (size_t i = 0; i < m; i++)
+	{
+		for (size_t j = 0; j < n; j++)
+		{
+			cout << idx[j][i] << " ";
+		}
+		cout << endl;
+	}
+
+
 }
+
+//void edgedfs(int r, int c, vector<vector<char>> &board)
+//{
+//	if (r < 0 || r >= m || c < 0 || c >= n)	return;
+//	if (idx[r][c] == -1 || board[r][c] != 'o') return;
+//	idx[r][c] = -1;
+//	for (size_t dr = -1; dr <= 1; dr++)
+//	{
+//		for (size_t dc = -1; dc <= 1; dc++)
+//		{
+//			if (dr == 0 || dc == 0) edgedfs(r + dr, c + dc, board);
+//		}
+//	}
+//}
+//
+//void dfs(int r, int c)
+//{
+//	if (r < 0 || r >= m || c < 0 || c >= n)	return;
+//	if (idx[r][c] == -1 || board[r][c] != 'o') return;
+//	board[r][c] = 'x';
+//	idx[r][c] = 1;
+//	for (size_t dr = -1; dr <= 1; dr++)
+//	{
+//		for (size_t dc = -1; dc <= 1; dc++)
+//		{
+//			if (dr == 0 || dc == 0) dfs(r + dr, c + dc);
+//		}
+//	}
+//}
+
 
 int main()
 {
-	vector<vector<char>> board(5, vector<char>(3, 'x'));
 
+	vector<vector<char>> board(4, vector<char> (6, 'x'));
+	string a[4] = { "XOXOXO", "OXOXOX", "XOXOXO", "OXOXOX" };
+	for (size_t i = 0; i < 4; i++)
+	{
+		for (size_t j = 0; j < 6; j++)
+		{
+			board[i][j] = a[i][j];
+		}
+	}
+	//board[1][1] = 'o'; board[2][1] = 'o'; board[2][2] = 'o'; board[1][3] = 'o';
+	//memset(idx, 0, sizeof(idx));
+	//for (size_t i = 0; i < m; i++)
+	//{
+	//	edgedfs(i, n - 1, board);
+	//	edgedfs(i, 0, board);
+	//}
+	//for (size_t i = 0; i < n; i++)
+	//{
+	//	edgedfs(0, i, board);
+	//	edgedfs(m - 1, i, board);
+	//}
+
+	//for (size_t i = 0; i < m; i++)
+	//{
+	//	for (size_t j = 0; j < n; j++)
+	//	{
+	//		cout << idx[i][j] << " ";
+	//	}
+	//	cout << endl;
+	//}
+
+	//int cnt = 0;
+	//for (size_t i = 0; i < m; i++)
+	//{
+	//	for (size_t j = 0; j < n; j++)
+	//	{
+	//		if (idx[i][j] == 0 && board[i][j] == 'o') dfs(i, j);
+	//	}
+	//}
 
 	solve(board);
 
