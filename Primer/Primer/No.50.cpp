@@ -56,33 +56,31 @@
 
 using namespace std;
 
-int idx[4][4];
+int idx[255][255];
 
-void edgedfs(int r, int c, vector<vector<char>> &board, int m, int n)
+void edgedfs(int r, int c, vector<vector<char>> &board, int n, int m)
 {
-	if (r < 0 || r >= m || c < 0 || c >= n)	return;
-	if (idx[r][c] == -1 || board[r][c] != 'o') return;
+	if (r < 0 || r >= n || c < 0 || c >= m)	return;
+	if (idx[r][c] == -1 || board[r][c] != 'O') return;
 	idx[r][c] = -1;
-	for (size_t dr = -1; dr <= 1; dr++)
-	{
-		for (size_t dc = -1; dc <= 1; dc++)
-		{
-			if (dr == 0 || dc == 0) edgedfs(r + dr, c + dc, board, m, n);
-		}
-	}
+	for (int dr = -1; dr <= 1; dr++)
+		for (int dc = -1; dc <= 1; dc++)
+			if (dr == 0 || dc == 0)
+				edgedfs(r + dr, c + dc, board, n, m);
 }
 
-void dfs(int r, int c, int m, int n, vector<vector<char>> &board)
+void dfs(int r, int c, int n, int m, vector<vector<char>> &board)
 {
-	if (r < 0 || r >= m || c < 0 || c >= n)	return;
-	if (idx[r][c] == -1 || board[r][c] != 'o') return;
-	board[r][c] = 'x';
+	if (r < 0 || r >= n || c < 0 || c >= m)	return;
+	if (idx[r][c] == -1 || board[r][c] != 'O') return;
+	board[r][c] = 'X';
 	idx[r][c] = 1;
-	for (size_t dr = -1; dr <= 1; dr++)
+	for (int dr = -1; dr <= 1; dr++)
 	{
-		for (size_t dc = -1; dc <= 1; dc++)
+		
+		for (int dc = -1; dc <= 1; dc++)
 		{
-			if (dr == 0 || dc == 0) dfs(r + dr, c + dc, m, n, board);
+			if (dr == 0 || dc == 0) dfs(r + dr, c + dc, n, m, board);
 		}
 	}
 }
@@ -93,46 +91,66 @@ void solve(vector<vector<char>> &board) {
 	//memset(idx, 0, sizeof(idx));
 	int n = board.size();
 	int m = board[0].size();
-	//if (n != 0)
-	//{
-	//	int m = board[0].size();
-	//	for (size_t i = 0; i < m; i++)
-	//	{
-	//		edgedfs(i, n - 1, board, m, n);
-	//		edgedfs(i, 0, board, m, n);
-	//	}
-	//	for (size_t i = 0; i < n; i++)
-	//	{
-	//		edgedfs(0, i, board, m, n);
-	//		edgedfs(m - 1, i, board, m, n);
-	//	}
+	if (n != 0)
+	{
+		//int m = board[0].size();
+		for (size_t i = 0; i < n; i++)
+		{
+			edgedfs(i, 0, board, n, m);
+			edgedfs(i, m - 1, board, n, m);
+		}
+		for (size_t i = 0; i < m; i++)
+		{
+			edgedfs(0, i, board, n, m);
+			edgedfs(n - 1, i, board, n, m);
+		}
 
-	//	for (size_t i = 0; i < m; i++)
-	//	{
-	//		for (size_t j = 0; j < n; j++)
-	//		{
-	//			if (idx[i][j] == 0 && board[i][j] == 'o') dfs(i, j, m, n, board);
-	//		}
-	//	}
 
-	//	//for (size_t i = 0; i < m; i++)
-	//	//{
-	//	//	for (size_t j = 0; j < n; j++)
-	//	//	{
-	//	//		cout << board[i][j] << " ";
-	//	//	}
-	//	//	cout << endl;
-	//	//}
+		// idx test
+		for (size_t i = 0; i < n; i++)
+		{
+			for (size_t j = 0; j < m; j++)
+			{
+				cout << idx[i][j] << " ";
+			}
+			cout << endl;
+		}
+		for (size_t i = 0; i < n; i++)
+		{
+			for (size_t j = 0; j < m; j++)
+			{
+				cout << board[i][j] << " ";
+			}
+			cout << endl;
+		}
+		cout << endl;
 
-	//	//for (size_t i = 0; i < m; i++)
-	//	//{
-	//	//	for (size_t j = 0; j < n; j++)
-	//	//	{
-	//	//		cout << idx[i][j] << " ";
-	//	//	}
-	//	//	cout << endl;
-	//	//}
-	//}
+		for (size_t i = 0; i < n; i++)
+		{
+			for (size_t j = 0; j < m; j++)
+			{
+				if (idx[i][j] == 0 && board[i][j] == 'O') dfs(i, j, n, m, board);
+			}
+		}
+
+		//for (size_t i = 0; i < m; i++)
+		//{
+		//	for (size_t j = 0; j < n; j++)
+		//	{
+		//		cout << board[i][j] << " ";
+		//	}
+		//	cout << endl;
+		//}
+
+		//for (size_t i = 0; i < m; i++)
+		//{
+		//	for (size_t j = 0; j < n; j++)
+		//	{
+		//		cout << idx[i][j] << " ";
+		//	}
+		//	cout << endl;
+		//}
+	}
 
 	for (size_t i = 0; i < n; i++)
 	{
@@ -143,9 +161,9 @@ void solve(vector<vector<char>> &board) {
 		cout << endl;
 	}
 
-	for (size_t i = 0; i < m; i++)
+	for (size_t i = 0; i < n; i++)
 	{
-		for (size_t j = 0; j < n; j++)
+		for (size_t j = 0; j < m; j++)
 		{
 			cout << idx[j][i] << " ";
 		}
@@ -188,13 +206,27 @@ void solve(vector<vector<char>> &board) {
 int main()
 {
 
-	vector<vector<char>> board(4, vector<char> (6, 'x'));
-	string a[4] = { "XOXOXO", "OXOXOX", "XOXOXO", "OXOXOX" };
-	for (size_t i = 0; i < 4; i++)
+	vector<vector<char>> board(3, vector<char> (3, 'x'));
+
+	// test
+	int n = board.size();
+	int m = board[0].size();
+	for (size_t i = 0; i < n; i++)
 	{
-		for (size_t j = 0; j < 6; j++)
+		for (size_t j = 0; j < m; j++)
 		{
-			board[i][j] = a[i][j];
+			cout << board[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	string a[4] = { "XOXOXO", "OXOXOX", "XOXOXO", "OXOXOX" };
+	string b[3] = { "OOO", "OOO", "OOO" };
+	for (size_t i = 0; i < 3; i++)
+	{
+		for (size_t j = 0; j < 3; j++)
+		{
+			board[i][j] = b[i][j];
 		}
 	}
 	//board[1][1] = 'o'; board[2][1] = 'o'; board[2][2] = 'o'; board[1][3] = 'o';
