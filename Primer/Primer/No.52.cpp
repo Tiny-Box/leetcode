@@ -49,23 +49,97 @@
 #include <iostream>
 #include <unordered_set>
 #include <queue>
+#include <tuple>
+#include <utility>
+#include <map>
+#include <string>
 
 using namespace std;
+
+struct T
+{
+	string val;
+	int sum;
+
+	T(string a, int b) :val(a), sum(b){}
+};
+
+bool connect(string a, string b)
+{
+	//sort(a.begin(), a.end());
+	//sort(b.begin(), b.end());
+
+	bool flag = false;
+	
+	int length = a.size();
+	for (size_t i = 0; i < length; i++)
+	{
+		if (a.at(i) != b.at(i))
+		{
+			if (!flag)
+				flag = true;
+			else
+				return false;
+		}
+	}
+
+	return true;
+}
 
 int ladderLength(string start, string end, unordered_set<string> &dict) {
 	if (start.empty() || end.empty())
 		return 0;
-	if (start.compare(end))
+	if (start.compare(end) == 0)
 		return 1;
 	if (dict.empty() || dict.size() == 0)
 		return 0;
 
-	pair<string, int> p(start, 1);
-	queue<pair> que;
+	T p (start, 1);
+	queue<T> que;
+	que.push(p);
+	dict.erase(start);
+
+	while (!que.empty())
+	{
+		T visit = que.front();
+		que.pop();
+
+		if (connect(visit.val, end))
+			return visit.sum + 1; 
+
+		string tmp = visit.val;
+		int length = tmp.size();
+		for (size_t i = 0; i < length; i++)
+		{
+			char c = tmp.at(i);
+			for (tmp[i] = 'a'; tmp[i] <= 'z'; tmp[i]++)
+			{
+				if (dict.find(tmp) != dict.end())
+				{
+					p = T(tmp, visit.sum + 1);
+					que.push(p);
+					dict.erase(tmp);
+				}
+			}
+
+			tmp[i] = c;
+		}
+
+	}
+
+	return 0;
 }
 
 int main()
 {
+	string a[5] = { "hot", "dot", "dog", "lot", "log" };
+	unordered_set<string> dict;
+	for (size_t i = 0; i < 5; i++)
+	{
+		dict.insert(a[i]);
+	}
+	cout << ladderLength("hit", "cog", dict) << endl;
+
 
 	system("PAUSE");
 	return 0;
