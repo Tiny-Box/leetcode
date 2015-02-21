@@ -52,15 +52,74 @@
 #include <tuple>
 #include <utility>
 #include <map>
+#include <set>
 #include <string>
 
 using namespace std;
 
+struct stock
+{
+	int day;
+	int price;
+};
+
+void tempmin(set<int, less<int> > &min, queue<int> &temp)
+{
+	int length = temp.size();
+
+	for (size_t i = 0; i < length; i++)
+	{
+		min.insert(temp.front());
+		temp.pop();
+	}
+}
+
 int maxProfit(vector<int> &prices) {
 
+	if (prices.empty())
+		return 0;
+	//stock max, min;
+	//
+	//max.day = 1; min.day = 1;
+	//max.price = prices[0]; min.price = prices[0];
+
+	int max;
+	max = prices[0];
+	//min = prices[0];
+	queue<int> temp;
+	temp.push(prices[0]);
+
+	set<int, less<int> > min;
+
+	for (vector<int>::iterator i = prices.begin() + 1; i < prices.end(); i++)
+	{
+		if (max < *i)
+		{
+			max = *i;
+			tempmin(min, temp);
+			temp.push(*i);
+		}
+		else
+			temp.push(*i);
+	}
+	
+	return max - *min.begin();
+	
 }
 
 int main()
 {
+	set<int, less<int> > minp;
 
+	minp.insert(2);
+	minp.insert(3);
+	minp.insert(14);
+	minp.insert(6);
+
+	for (set < int, less<int> >::iterator i = minp.begin(); i != minp.end(); i++)
+	{
+		cout << *i << endl;
+	}
+
+	system("Pause");
 }
