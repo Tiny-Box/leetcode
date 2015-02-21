@@ -61,65 +61,103 @@ struct stock
 {
 	int day;
 	int price;
+	
+	stock(int x, int y) :day(x), price(y){}
+
+	//bool operator() (const stock &a, const stock &b)
+	//{
+	//	return a.price < b.price;
+	//}
 };
 
-void tempmin(set<int, less<int> > &min, queue<int> &temp)
-{
-	int length = temp.size();
 
-	for (size_t i = 0; i < length; i++)
-	{
-		min.insert(temp.front());
-		temp.pop();
-	}
+bool scmp(stock a, stock b)
+{
+	return a.price < b.price;
 }
+
+//void tempmin(set<int, less<int> > &min, queue<int> &temp)
+//{
+//	int length = temp.size();
+//
+//	for (size_t i = 0; i < length; i++)
+//	{
+//		min.insert(temp.front());
+//		temp.pop();
+//	}
+//}
 
 int maxProfit(vector<int> &prices) {
 
-	if (prices.empty())
-		return 0;
+	//if (prices.empty())
+	//	return 0;
+
+	//bool(*scmp_pt)(stock, stock) = scmp;
+	//set<stock, bool(*)(stock, stock)> price(scmp_pt);
+	//
+	//int length = prices.size();
+	//for (size_t i = 0; i < length; i++)
+	//{
+	//	stock temp(i, prices[i]);
+	//	price.insert(temp);
+	//}
+
+	//set<stock, bool(*)(stock, stock)>::iterator max = price.end();
+	//set<stock, bool(*)(stock, stock)>::iterator min = price.begin();
+
+	//max--;
+	//while (max != price.begin())
+	//{
+	//	if ((*max).day >= (*min).day)
+	//	{
+	//		return (*max).price - (*min).price;
+	//	}
+	//	max--;
+	//}
 	//stock max, min;
 	//
 	//max.day = 1; min.day = 1;
 	//max.price = prices[0]; min.price = prices[0];
-
-	int max;
-	max = prices[0];
-	//min = prices[0];
-	queue<int> temp;
-	temp.push(prices[0]);
-
-	set<int, less<int> > min;
-
-	for (vector<int>::iterator i = prices.begin() + 1; i < prices.end(); i++)
-	{
-		if (max < *i)
-		{
-			max = *i;
-			tempmin(min, temp);
-			temp.push(*i);
+	
+	////test out
+	//int length = prices.size();
+	//for (size_t i = 0; i < length; i++)
+	//{
+	//	stock temp(i, prices[i]);
+	//	price.insert(temp);
+	//}
+	//for (set<stock, bool(*)(stock, stock)>::iterator i = price.begin(); i != price.end(); i++)
+	//{
+	//	cout << (*i).day << " " << (*i).price << endl;
+	//}
+	
+	int profit = 0;
+	int bot = 0;
+	for (int i = 1; i < prices.size(); ++i) {
+		// LOGIC : if we find a new low, then update low
+		// if we find that the number gives a better profit 
+		// and is after the bottom, then update profit
+		if (prices[bot] > prices[i]) {
+			bot = i;
 		}
-		else
-			temp.push(*i);
+		else if (i > bot && prices[i] - prices[bot] > profit) {
+			profit = prices[i] - prices[bot];
+		}
 	}
-	
-	return max - *min.begin();
-	
+	return profit;
 }
 
 int main()
 {
-	set<int, less<int> > minp;
+	vector<int> prices;
+	prices.push_back(2);
+	prices.push_back(4);
+	prices.push_back(1);
 
-	minp.insert(2);
-	minp.insert(3);
-	minp.insert(14);
-	minp.insert(6);
+	maxProfit(prices);
 
-	for (set < int, less<int> >::iterator i = minp.begin(); i != minp.end(); i++)
-	{
-		cout << *i << endl;
-	}
+
+
 
 	system("Pause");
 }
