@@ -86,6 +86,7 @@ public:
 		}
 	}
 
+	void dfs(TreeLinkNode *father, TreeLinkNode *parent);
 	int MaxDepth(TreeLinkNode *);
 	bool isBalance(TreeLinkNode *);
 	int count(TreeLinkNode *);                      //计算二叉树的个数
@@ -138,6 +139,33 @@ void Btree::Preorder(TreeLinkNode *temp)    //这是先序遍历二叉树，采用了递归的方
 		Preorder(temp->left);
 		Preorder(temp->right);
 	}
+}
+
+void Btree::dfs(TreeLinkNode *father, TreeLinkNode *parent)
+{
+	if (father != NULL && father->left != NULL)
+	{
+		if (parent == father->left)
+		{
+			parent->next = father->right;
+		}
+
+		if (parent == father->right)
+		{
+			if (father->next == NULL)
+			{
+				parent->next = NULL;
+			}
+			else
+			{
+				parent->next = father->next->left;
+			}
+		}
+
+		dfs(parent, parent->left);
+		dfs(parent, parent->right);
+	}
+
 }
 
 //void Btree::Depth(TreeLinkNode *temp, int count, vector<int> &depth)
@@ -248,7 +276,7 @@ void main()
 	Btree A;
 	int array2[] = { 7, 4, 2, 3, 15, 35, 6, 45, 55, 20, 1, 14, 56, 57, 58 };
 	int array1[] = { 1, 2 };
-	int array[] = { 5, 2, 6, 1, 3, 4, 7 };
+	int array[] = { 4, 2, 6, 1, 3, 5, 7 };
 	int k;
 	k = sizeof(array) / sizeof(array[0]);
 	cout << "建立排序二叉树顺序: " << endl;
@@ -270,6 +298,7 @@ void main()
 	cout << endl << "平衡树判断测试：" << endl;
 	A.display4();
 
+	cout << "dfs is answer." << endl;
 
 	system("PAUSE");
 }
