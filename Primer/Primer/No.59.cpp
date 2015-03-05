@@ -80,6 +80,7 @@ public:
 	}
 	void create_Btree(int);
 	TreeNode *bst(ListNode *);
+	TreeNode *tobst(int i);
 	void Preorder(TreeNode *);                  //先序遍历
 	void inorder(TreeNode *);                   //中序遍历
 	void Postorder(TreeNode *);                 //后序遍历
@@ -121,6 +122,11 @@ void Btree::create_Btree(int x)
 		else
 			back->right = newnode;
 	}
+}
+
+TreeNode *Btree::tobst(vector<int> &num, int i)
+{
+	return root;
 }
 
 TreeNode *Btree::bst(ListNode *head)
