@@ -80,7 +80,7 @@ public:
 	}
 	void create_Btree(int);
 	TreeNode *bst(ListNode *);
-	TreeNode *tobst(int i);
+	TreeNode *tobst(vector<int> &num, int i, int j);
 	void Preorder(TreeNode *);                  //先序遍历
 	void inorder(TreeNode *);                   //中序遍历
 	void Postorder(TreeNode *);                 //后序遍历
@@ -124,9 +124,15 @@ void Btree::create_Btree(int x)
 	}
 }
 
-TreeNode *Btree::tobst(vector<int> &num, int i)
+TreeNode *Btree::tobst(vector<int> &num, int i, int j)
 {
+	if (i == j)
+		return nullptr;
 
+	TreeNode* root = new TreeNode(num.at((j - i) / 2 + i));
+
+	root->right = tobst(num, i + 1, j);
+	root->left = tobst(num, 0, i);
 	return root;
 }
 
@@ -226,7 +232,7 @@ void main()
 	A.display2();
 	cout << endl << "后序遍历序列: " << endl;
 	A.display3();
-	cout << endl << "bst is answer." << endl;
+	cout << endl << "tobst is answer." << endl;
 
 
 
