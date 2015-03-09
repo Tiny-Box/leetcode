@@ -49,6 +49,8 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <algorithm> 
+#include <unordered_map>
 
 using namespace std;
 
@@ -74,6 +76,9 @@ class Btree
 	static int m;
 public:
 	TreeNode *root;
+	vector<int> preorder;
+	vector<int> inorder;
+	vector<int> postorder;
 	Btree()
 	{
 		root = NULL;
@@ -81,14 +86,17 @@ public:
 	void create_Btree(int);
 	TreeNode *bst(ListNode *);
 	TreeNode *tobst(vector<int> &num, int i, int j);
+	TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder);
+	TreeNode* buildTreeHelper(vector<int>& post, int is, int ie, int ps, int pe, unordered_map<int, int>& inorder_map);
 	void Preorder(TreeNode *);                  //先序遍历
-	void inorder(TreeNode *);                   //中序遍历
+	void Inorder(TreeNode *);                   //中序遍历
 	void Postorder(TreeNode *);                 //后序遍历
 	void display1() { Preorder(root); cout << endl; }
-	void display2() { inorder(root); cout << endl; }
+	void display2() { Inorder(root); cout << endl; }
 	void display3() { Postorder(root); cout << endl; }
 	void display4()
 	{
+		
 		cout << "over" << endl;
 	}
 
@@ -124,8 +132,37 @@ void Btree::create_Btree(int x)
 	}
 }
 
+TreeNode Btree::*buildTree(vector<int> &inorder, vector<int> &postorder) {
+	unordered_map<int, int> inorder_map;
+	// we need a map to look up the position of root in inorder, so
+	// that we can divide the tree into separate subtrees,
+	// reduces the complexity from n^2 to n assuming good hashing by unodered_map
+	for (int i = 0; i < inorder.size(); ++i) {
+		inorder_map[inorder[i]] = i;
+	}
+	return buildTreeHelper(postorder, 0, inorder.size() - 1, 0, postorder.size() - 1, inorder_map);
+}
+
+TreeNode Btree::*buildTreeHelper(vector<int>& post, int is, int ie, int ps, int pe, unordered_map<int, int>& inorder_map) {
+
+	if (is > ie || ps > pe) {
+		return NULL;
+	}
+	int root_val = post[pe];
+	TreeNode* root = new TreeNode(root_val);
+	int i = inorder_map.find(root_val)->second;
+	// number of nodes in left subtree
+	int l = i - is;
+	root->left = buildTreeHelper(post, is, is + l - 1, ps, ps + l - 1, inorder_map);
+	root->right = buildTreeHelper(post, is + l + 1, ie, ps + l, pe - 1, inorder_map);
+
+	return root;
+}
+
+
 TreeNode *Btree::tobst(vector<int> &num, int i, int j)
 {
+	
 	if (i == j)
 		return nullptr;
 
@@ -156,6 +193,7 @@ TreeNode *Btree::bst(ListNode *head)
 	root->right = bst((*slow)->next);
 	*slow = NULL;
 	root->left = bst(head);
+	
 
 	return root;
 
@@ -183,6 +221,7 @@ void Btree::Preorder(TreeNode *temp)    //这是先序遍历二叉树，采用了递归的方法。
 {
 	if (temp != NULL)
 	{
+		preorder.push_back(temp->val);
 		cout << temp->val << " ";
 		Preorder(temp->left);
 		Preorder(temp->right);
@@ -190,13 +229,14 @@ void Btree::Preorder(TreeNode *temp)    //这是先序遍历二叉树，采用了递归的方法。
 }
 
 
-void Btree::inorder(TreeNode *temp)      //这是中序遍历二叉树，采用了递归的方法。
+void Btree::Inorder(TreeNode *temp)      //这是中序遍历二叉树，采用了递归的方法。
 {
 	if (temp != NULL)
 	{
-		inorder(temp->left);
+		Inorder(temp->left);
+		inorder.push_back(temp->val);
 		cout << temp->val << " ";
-		inorder(temp->right);
+		Inorder(temp->right);
 	}
 }
 void Btree::Postorder(TreeNode *temp)     //这是后序遍历二叉树，采用了递归的方法。
@@ -205,6 +245,7 @@ void Btree::Postorder(TreeNode *temp)     //这是后序遍历二叉树，采用了递归的方法
 	{
 		Postorder(temp->left);
 		Postorder(temp->right);
+		postorder.push_back(temp->val);
 		cout << temp->val << " ";
 	}
 }
@@ -214,8 +255,8 @@ void Btree::Postorder(TreeNode *temp)     //这是后序遍历二叉树，采用了递归的方法
 void main()
 {
 	Btree A;
-	int array2[] = { 7, 4, 2, 3, 15, 35, 6, 45, 55, 20, 1, 14, 56, 57, 58 };
-	int array1[] = { 1 };
+	int array1[] = { 7, 4, 2, 3, 15, 35, 6, 45, 55, 20, 1, 14, 56, 57, 58 };
+	int array2[] = { 2, 1 };
 	int array[] = { 4, 2, 6, 1, 3, 5, 7 };
 	int k;
 	k = sizeof(array1) / sizeof(array1[0]);
