@@ -51,6 +51,7 @@
 #include <stack>
 #include <algorithm> 
 #include <unordered_map>
+#include <queue>
 
 using namespace std;
 
@@ -84,10 +85,7 @@ public:
 		root = NULL;
 	}
 	void create_Btree(int);
-	TreeNode *bst(ListNode *);
-	TreeNode *tobst(vector<int> &num, int i, int j);
-	TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder);
-	TreeNode* buildTreeHelper(vector<int>& post, int is, int ie, int ps, int pe, unordered_map<int, int>& inorder_map);
+	void levelorder(TreeNode *);
 	void Preorder(TreeNode *);                  //先序遍历
 	void Inorder(TreeNode *);                   //中序遍历
 	void Postorder(TreeNode *);                 //后序遍历
@@ -96,7 +94,7 @@ public:
 	void display3() { Postorder(root); cout << endl; }
 	void display4()
 	{
-		
+		levelorder(root);
 		cout << "over" << endl;
 	}
 
@@ -132,70 +130,56 @@ void Btree::create_Btree(int x)
 	}
 }
 
-TreeNode *Btree::buildTree(vector<int> &inorder, vector<int> &postorder) {
-	unordered_map<int, int> inorder_map;
-	for (int i = 0; i < inorder.size(); ++i) {
-		inorder_map[inorder[i]] = i;
-	}
-	return buildTreeHelper(postorder, 0, inorder.size() - 1, 0, postorder.size() - 1, inorder_map);
-}
-
-TreeNode *Btree::buildTreeHelper(vector<int>& post, int is, int ie, int ps, int pe, unordered_map<int, int>& inorder_map) {
-
-	if (is > ie || ps > pe) {
-		return NULL;
-	}
-	int root_val = post[pe];
-	TreeNode* root = new TreeNode(root_val);
-	int i = inorder_map.find(root_val)->second;
-
-	int l = i - is;
-	root->left = buildTreeHelper(post, is, is + l - 1, ps, ps + l - 1, inorder_map);
-	root->right = buildTreeHelper(post, is + l + 1, ie, ps + l, pe - 1, inorder_map);
-
-	return root;
-}
-
-
-TreeNode *Btree::tobst(vector<int> &num, int i, int j)
-{
-	
-	if (i == j)
-		return nullptr;
-
-	TreeNode* root = new TreeNode(num.at((j - i) / 2 + i));
-
-	root->right = tobst(num, (i + j) / 2 + 1, j);
-	root->left = tobst(num, i, (i + j) / 2 - 1);
-	return root;
-}
-
-TreeNode *Btree::bst(ListNode *head)
+void Btree::levelorder(TreeNode *a)
 {
 
-	if (!head)
-		return nullptr;
-
-
-	ListNode **slow = &head, **fast = &head;
-
-	while (*fast && (*fast)->next){
-		fast = &((*fast)->next);
-		slow = &((*slow)->next);
-		if (*fast)
-			fast = &((*fast)->next);
+	TreeNode *dummy = new TreeNode(-1);
+	bool leftFirst = true;
+	queue<TreeNode*> q;
+	stack<TreeNode*> s;
+	if (root) q.push(root);
+	if (!q.empty()) q.push(dummy);
+	vector<vector<int> > vv;
+	vector<int> v;
+	while (!q.empty()) {
+		TreeNode *top = q.front();
+		q.pop();
+		if (top == dummy) {
+			leftFirst = !leftFirst;
+			if (v.size() > 0)
+				vv.push_back(v);
+			v.clear();
+			while (!s.empty()) {
+				q.push(s.top());
+				s.pop();
+			}
+			if (!q.empty())
+				q.push(dummy);
+		}
+		else {
+			v.push_back(top->val);
+			if (leftFirst) {
+				if (top->left) s.push(top->left);
+				if (top->right) s.push(top->right);
+			}
+			else {
+				if (top->right) s.push(top->right);
+				if (top->left) s.push(top->left);
+			}
+		}
 	}
 
-	TreeNode* root = new TreeNode((*slow)->val);
-	root->right = bst((*slow)->next);
-	*slow = NULL;
-	root->left = bst(head);
-	
-
-	return root;
+	for (vector<vector<int> >::iterator i = vv.begin(); i != vv.end(); i++)
+	{
+		cout << "[";
+		for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); j++)
+		{
+			cout << *j << " ";
+		}
+		cout << "]" << endl;
+	}
 
 }
-
 
 int Btree::count(TreeNode *p)
 {
@@ -270,7 +254,9 @@ void main()
 	A.display2();
 	cout << endl << "后序遍历序列: " << endl;
 	A.display3();
-	cout << endl << "buildtree is answer." << endl;
+	cout << endl << "分层遍历序列: " << endl;
+	A.display4();
+	cout << endl << "create is answer." << endl;
 
 
 
