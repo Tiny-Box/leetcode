@@ -145,17 +145,17 @@ int numTrees(int n)
 	else
 	{
 		for (i = 2; i <= n; i++)
-		{ 
+		{
 			sum = 0;
 			for (j = 1; j <= i / 2; j++)
 			{
-				sum += 2 * res[j - 1] * res[i - j]; 
+				sum += 2 * res[j - 1] * res[i - j];
 			}
 			if (i % 2)
 			{
-				sum += res[i / 2] * res[i / 2]; 
+				sum += res[i / 2] * res[i / 2];
 			}
-			res[i] = sum; 
+			res[i] = sum;
 		}
 	}
 
@@ -229,7 +229,7 @@ void main()
 	A.display3();
 	cout << endl << "·Ö²ã±éÀúĞòÁĞ: " << endl;
 	A.display4();
-	cout << endl << "numTree is answer." << endl;
+	cout << endl << "inorder is answer." << endl;
 
 
 
