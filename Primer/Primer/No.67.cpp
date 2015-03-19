@@ -77,6 +77,7 @@ class Btree
 	static int m;
 public:
 	TreeNode *root;
+	ListNode *sroot;
 	vector<int> preorder;
 	vector<int> inorder;
 	vector<int> postorder;
@@ -85,6 +86,8 @@ public:
 		root = NULL;
 	}
 	void create_Btree(int);
+	void create_Stree(int);
+	void printStree(TreeNode *);
 	void levelorder(TreeNode *);
 	void Preorder(TreeNode *);                  //先序遍历
 	void Inorder(TreeNode *);                   //中序遍历
@@ -130,6 +133,111 @@ void Btree::create_Btree(int x)
 		else
 			back->right = newnode;
 	}
+}
+
+void Btree::create_Stree(int x)
+{
+	ListNode *newnode = new ListNode(x);
+	if (sroot == NULL)
+		sroot = newnode;
+	else
+	{
+		ListNode *back = sroot;
+		ListNode *current = sroot;
+		while (current != NULL)
+		{
+			back = current;
+			current = current->next;
+		}
+		back->next = newnode;
+	}
+}
+
+void printStree(ListNode *current)
+{
+	if (current != NULL)
+	{
+		cout << current->val << " ";
+		printStree(current->next);
+	}
+}
+
+//void create_tree(TreeNode *root, int x)
+//{
+//	TreeNode *newnode = new TreeNode(x);
+//	if (root = NULL)
+//		root = newnode;
+//	else
+//	{
+//		TreeNode *back = root;
+//		TreeNode *current = root;
+//		while (current != NULL)
+//		{
+//			back = current;
+//			current = current->next;
+//		}
+//		back->next = newnode;
+//	}
+//	
+//}
+
+TreeNode *reverseBetween(TreeNode *head, int m, int n)
+{
+	TreeNode *mpoint;
+	TreeNode *npoint;
+	TreeNode *current;
+	current = mpoint = npoint = head;
+	int sum = 1;
+	while (sum <= n)
+	{
+		if (sum <= m)
+		{
+			mpoint = current;
+		}
+		npoint = current;
+		current = current->next;
+		sum += 1;
+	}
+	int temp = npoint->val;
+	npoint->val = mpoint->val;
+	mpoint->val = temp;
+	return head;
+}
+
+ListNode *reverselist(ListNode *temp)
+{
+	ListNode *pcurrent, *pnext, *pexc;
+	if (temp == NULL || temp->next == NULL)
+		return temp;
+	pcurrent = temp;
+	pnext = pcurrent->next;
+	pcurrent->next = NULL;
+
+	while (pnext != NULL)
+	{
+		pexc = pnext->next;
+		pnext->next = pcurrent;
+		pcurrent = pnext;
+		pnext = pexc;
+	}// 循环一遍，时间上是O(n)，空间O(1)
+	temp = pcurrent;
+	return temp;
+}
+
+void unittest(int *data, int length)
+{
+	Btree A;
+
+	cout << endl << "建立单链表顺序: " << endl;
+	for (int i = 0; i < length; i++)
+	{
+		cout << data[i] << " ";
+		A.create_Stree(data[i]);
+	}
+
+	cout << endl << "反转后: " << endl;
+	A.sroot = reverselist(A.sroot);
+	printStree(A.sroot);
 }
 
 vector<string> result;
@@ -214,24 +322,46 @@ void main()
 	int array[] = { 4, 2, 6, 1, 3, 5, 7 };
 	int k;
 	k = sizeof(array1) / sizeof(array1[0]);
-	cout << "建立排序二叉树顺序: " << endl;
-	for (int i = 0; i<k; i++)
-	{
-		cout << array1[i] << " ";
-		A.create_Btree(array1[i]);
-	}
-	cout << endl;
-	cout << endl << "先序遍历序列: " << endl;
-	A.display1();
-	cout << endl << "中序遍历序列: " << endl;
-	A.display2();
-	cout << endl << "后序遍历序列: " << endl;
-	A.display3();
-	cout << endl << "分层遍历序列: " << endl;
-	A.display4();
-	cout << endl << "tryIp is answer." << endl;
+	//cout << "建立排序二叉树顺序: " << endl;
+	//for (int i = 0; i<k; i++)
+	//{
+	//	cout << array1[i] << " ";
+	//	A.create_Btree(array1[i]);
+	//}
+	//cout << endl;
+	//cout << endl << "先序遍历序列: " << endl;
+	//A.display1();
+	//cout << endl << "中序遍历序列: " << endl;
+	//A.display2();
+	//cout << endl << "后序遍历序列: " << endl;
+	//A.display3();
+	//cout << endl << "分层遍历序列: " << endl;
+	//A.display4();
+	//cout << endl << "tryIp is answer." << endl;
+	//cout << "建立单链表顺序: " << endl;
+	//for (int i = 0; i < k; i++)
+	//{
+	//	cout << array1[i] << " ";
+	//	A.create_Stree(array1[i]);
+	//}
+	//cout << endl;
+	//cout << endl << "顺序遍历序列: " << endl;
+	//printStree(A.root);
+	//cout << endl;
+	//TreeNode *test = reverseBetween(A.root, 2, 4);
+	//printStree(test);
 
+	cout << "Reverse test: " << endl;
+	int *test1 = NULL;
+	int test2[] = { 1 };
+	int test3[] = { 1, 2, 3, 4, 5, 6 };
+	TreeNode *ttest1;
+	TreeNode *ttest2;
+	TreeNode *ttest3;
 
+	unittest(test1, 0);
+	unittest(test2, 1);
+	unittest(test3, 6);
 
 	system("PAUSE");
 }
