@@ -183,22 +183,38 @@ void printStree(ListNode *current)
 
 ListNode *reverselist(ListNode *temp, ListNode *stop)
 {
-	ListNode *pcurrent, *pnext, *pexc;
-	if (temp == NULL || temp->next == NULL)
-		return temp;
-	pcurrent = temp;
-	pnext = pcurrent->next;
-	pcurrent->next = NULL;
+	//ListNode *pcurrent, *pnext, *pexc;
+	//if (temp == NULL || temp->next == NULL)
+	//	return temp;
+	//pcurrent = temp;
+	//pnext = pcurrent->next;
+	//pcurrent->next = NULL;
 
-	while (pnext != stop)
+	//while (pnext != stop)
+	//{
+	//	pexc = pnext->next;
+	//	pnext->next = pcurrent;
+	//	pcurrent = pnext;
+	//	pnext = pexc;
+	//}// 循环一遍，时间上是O(n)，空间O(1)
+	//temp = pcurrent;
+	//return temp;
+	ListNode *current, *p;
+	ListNode *head = new ListNode(0);
+	if (temp == NULL)
 	{
-		pexc = pnext->next;
-		pnext->next = pcurrent;
-		pcurrent = pnext;
-		pnext = pexc;
-	}// 循环一遍，时间上是O(n)，空间O(1)
-	temp = pcurrent;
-	return temp;
+		return NULL;
+	}
+	head->next = temp;
+	current = head->next;
+	while (current->next != stop)
+	{
+		p = current->next;
+		current->next = p->next;
+		p->next = head->next;
+		head->next = p;
+	}
+	return head->next;
 }
 
 ListNode *reverseBetween(ListNode *head, int m, int n)
@@ -206,9 +222,13 @@ ListNode *reverseBetween(ListNode *head, int m, int n)
 	ListNode *mnode;
 	ListNode *nnode;
 	ListNode *current;
-	current = mnode = nnode = head;
+	ListNode *fhead = new ListNode(0);
+	fhead->next = head;
+	current = mnode = nnode = fhead->next;
+	if (m == n)
+		return fhead->next;
 	int sum = 1;
-	while (sum < n)
+	while (sum <= n)
 	{
 		if (sum <= m)
 		{
@@ -218,15 +238,29 @@ ListNode *reverseBetween(ListNode *head, int m, int n)
 		current = current->next;
 		sum += 1;
 	}
-	mnode = reverselist(mnode, nnode);
-	current = head;
-	while (current->next != NULL)
+
+	cout << "mnode: " << mnode->val << endl;
+	cout << "nnode: " << nnode->val << endl;
+	ListNode *temp = mnode;
+	mnode = reverselist(mnode, nnode->next);
+	current = fhead;
+	while (current->next != temp)
+	{
 		current = current->next;
-	current->next = nnode;
+	}
+	current->next = mnode;
+	//nnode = current;
+	//current = head;
+	//while (current->next != NULL)
+	//	current = current->next;
+	//current = mnode;
+	//while (current->next != NULL)
+	//	current = current->next;
+	//current->next = nnode;
 	//int temp = npoint->val;
 	//npoint->val = mpoint->val;
 	//mpoint->val = temp;
-	return head;
+	return fhead->next;
 }
 
 
@@ -243,7 +277,10 @@ void unittest(int *data, int length)
 	}
 
 	cout << endl << "反转后: " << endl;
-	A.sroot = reverseBetween(A.sroot, 2, 4);
+	//ListNode *stop = A.sroot->next->next->next->next;
+	//A.sroot->next = reverselist(A.sroot->next, stop);
+	//cout << endl << stop->val << endl;
+	A.sroot = reverseBetween(A.sroot, 1, 4);
 	printStree(A.sroot);
 	
 }
