@@ -181,30 +181,7 @@ void printStree(ListNode *current)
 //	
 //}
 
-TreeNode *reverseBetween(TreeNode *head, int m, int n)
-{
-	TreeNode *mpoint;
-	TreeNode *npoint;
-	TreeNode *current;
-	current = mpoint = npoint = head;
-	int sum = 1;
-	while (sum <= n)
-	{
-		if (sum <= m)
-		{
-			mpoint = current;
-		}
-		npoint = current;
-		current = current->next;
-		sum += 1;
-	}
-	int temp = npoint->val;
-	npoint->val = mpoint->val;
-	mpoint->val = temp;
-	return head;
-}
-
-ListNode *reverselist(ListNode *temp)
+ListNode *reverselist(ListNode *temp, ListNode *stop)
 {
 	ListNode *pcurrent, *pnext, *pexc;
 	if (temp == NULL || temp->next == NULL)
@@ -213,7 +190,7 @@ ListNode *reverselist(ListNode *temp)
 	pnext = pcurrent->next;
 	pcurrent->next = NULL;
 
-	while (pnext != NULL)
+	while (pnext != stop)
 	{
 		pexc = pnext->next;
 		pnext->next = pcurrent;
@@ -223,6 +200,36 @@ ListNode *reverselist(ListNode *temp)
 	temp = pcurrent;
 	return temp;
 }
+
+ListNode *reverseBetween(ListNode *head, int m, int n)
+{
+	ListNode *mnode;
+	ListNode *nnode;
+	ListNode *current;
+	current = mnode = nnode = head;
+	int sum = 1;
+	while (sum < n)
+	{
+		if (sum <= m)
+		{
+			mnode = current;
+		}
+		nnode = current;
+		current = current->next;
+		sum += 1;
+	}
+	mnode = reverselist(mnode, nnode);
+	current = head;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = nnode;
+	//int temp = npoint->val;
+	//npoint->val = mpoint->val;
+	//mpoint->val = temp;
+	return head;
+}
+
+
 
 void unittest(int *data, int length)
 {
@@ -236,8 +243,9 @@ void unittest(int *data, int length)
 	}
 
 	cout << endl << "·´×ªºó: " << endl;
-	A.sroot = reverselist(A.sroot);
+	A.sroot = reverseBetween(A.sroot, 2, 4);
 	printStree(A.sroot);
+	
 }
 
 vector<string> result;
@@ -359,8 +367,8 @@ void main()
 	TreeNode *ttest2;
 	TreeNode *ttest3;
 
-	unittest(test1, 0);
-	unittest(test2, 1);
+	//unittest(test1, 0);
+	//unittest(test2, 1);
 	unittest(test3, 6);
 
 	system("PAUSE");
