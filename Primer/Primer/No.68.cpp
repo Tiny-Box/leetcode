@@ -266,51 +266,31 @@ ListNode *reverseBetween(ListNode *head, int m, int n)
 
 int numDecodings(string s) 
 {
-	if (s.size() <= 1)
-		return s == "0" ? 0 : 1;
+	if (s.size() == 0)
+		return 0;
+	if (s[0] == '0')
+		return 0;
 	int length = s.size();
 	int *sum = new int[length];
 	sum[0] = 1;
 
 	for (size_t i = 1; i < length; i++)
 	{
-		if (s[i] == '0')
-		{
+		if (s[i-1] == '0' && s[i] == '0')
+			return  0;
+		else if (s[i] == '0')
 			sum[i] = sum[i - 1];
-		}
-		if (s[i-1] - '0' <= 2 && s[i-1] - '0' > 0 && s[i] - '0' >= 0 && s[i] - '0' <= 6)
-		{
-			sum[i] = sum[i - 1] + 2;
-		}
-		else
-		{
+		else if (s[i - 1] == '0')
 			sum[i] = sum[i - 1] + 1;
-		}
+		else if (s[i-1] - '0' <= 2 && s[i-1] - '0' > 0 && s[i] - '0' > 0 && s[i] - '0' <= 6)
+			sum[i] = sum[i - 1] + 1;
+		else
+			sum[i] = sum[i - 1];
 	}
 
 	return sum[length - 1];
 }
 
-
-void unittest(int *data, int length)
-{
-	Btree A;
-
-	cout << endl << "建立单链表顺序: " << endl;
-	for (int i = 0; i < length; i++)
-	{
-		cout << data[i] << " ";
-		A.create_Stree(data[i]);
-	}
-
-	cout << endl << "反转后: " << endl;
-	//ListNode *stop = A.sroot->next->next->next->next;
-	//A.sroot->next = reverselist(A.sroot->next, stop);
-	//cout << endl << stop->val << endl;
-	A.sroot = reverseBetween(A.sroot, 1, 4);
-	printStree(A.sroot);
-
-}
 
 vector<string> result;
 void tryIp(int step, string s, string ip) {
@@ -423,17 +403,11 @@ void main()
 	//TreeNode *test = reverseBetween(A.root, 2, 4);
 	//printStree(test);
 
-	cout << "Reverse test: " << endl;
-	int *test1 = NULL;
-	int test2[] = { 1 };
-	int test3[] = { 1, 2, 3, 4, 5, 6 };
-	TreeNode *ttest1;
-	TreeNode *ttest2;
-	TreeNode *ttest3;
-
-	//unittest(test1, 0);
-	//unittest(test2, 1);
-	unittest(test3, 6);
+	cout << "numDecoding: " << endl;
+	//cout << endl << "s: 10" << endl;
+	//cout << numDecodings("10"); 
+	cout << endl << "s: 101" << endl;
+	cout << numDecodings("101") << endl;
 
 	system("PAUSE");
 }
