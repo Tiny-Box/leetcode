@@ -409,5 +409,12 @@ void main()
 	cout << endl << "s: 101" << endl;
 	cout << numDecodings("101") << endl;
 
+	int i = 100, sum = 0;
+	for (int i = 0; i != 10; i++)
+	{
+		sum += i;
+	}
+	cout << i << " " << sum << endl;
+
 	system("PAUSE");
 }
