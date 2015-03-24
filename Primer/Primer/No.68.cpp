@@ -52,6 +52,7 @@
 #include <algorithm> 
 #include <unordered_map>
 #include <queue>
+#include <string>
 
 using namespace std;
 
@@ -365,6 +366,27 @@ void Btree::Postorder(TreeNode *temp)     //这是后序遍历二叉树，采用了递归的方法
 }
 
 
+vector<string> generateSubstrings(string s, int num, vector<string> &sta)
+{
+	if (num == s.size())
+		return sta;
+
+	auto b = begin(s) + num;
+
+	string temp = "";
+	temp += *b;
+	sta.push_back(temp);
+	b++;
+	while (b != end(s))
+	{
+
+		temp += *b;
+		sta.push_back(temp);
+		b++;
+		
+	}
+	return generateSubstrings(s, num + 1, sta);
+}
 
 void main()
 {
@@ -416,5 +438,14 @@ void main()
 	}
 	cout << i << " " << sum << endl;
 
+	vector<string> sta;
+	sta = generateSubstrings("rum", 0, sta);
+	/*for (size_t i = 0; i < sta.size(); i++)
+	{
+		cout << sta.at(i) << endl;
+	}*/
+
+	for (auto c : sta)
+		cout << c << endl;
 	system("PAUSE");
 }
