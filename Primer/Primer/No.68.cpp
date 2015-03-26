@@ -267,29 +267,47 @@ ListNode *reverseBetween(ListNode *head, int m, int n)
 
 int numDecodings(string s) 
 {
-	if (s.size() == 0)
-		return 0;
-	if (s[0] == '0')
-		return 0;
-	int length = s.size();
-	int *sum = new int[length];
-	sum[0] = 1;
+	//if (s.size() == 0)
+	//	return 0;
+	//if (s[0] == '0')
+	//	return 0;
+	//int length = s.size();
+	//int *sum = new int[length];
+	//sum[0] = 1;
 
-	for (size_t i = 1; i < length; i++)
+	//for (size_t i = 1; i < length; i++)
+	//{
+	//	if (s[i-1] == '0' && s[i] == '0')
+	//		return  0;
+	//	else if (s[i] == '0')
+	//		sum[i] = sum[i - 1];
+	//	else if (s[i - 1] == '0')
+	//		sum[i] = sum[i - 1] + 1;
+	//	else if (s[i-1] - '0' <= 2 && s[i-1] - '0' > 0 && s[i] - '0' > 0 && s[i] - '0' <= 6)
+	//		sum[i] = sum[i - 1] + 1;
+	//	else
+	//		sum[i] = sum[i - 1];
+	//}
+
+	//return sum[length - 1];
+	if (s.length() == 0) return 0;
+
+	if (s.length() == 1) return s[0] == '0' ? 0 : 1;
+
+	vector<int>dp(s.length() + 1, 0);
+	dp[s.length()] = 1;
+	dp[s.length() - 1] = (s[s.length() - 1] == '0') ? 0 : 1;
+	for (int i = s.length() - 2; i >= 0; i--)
 	{
-		if (s[i-1] == '0' && s[i] == '0')
-			return  0;
-		else if (s[i] == '0')
-			sum[i] = sum[i - 1];
-		else if (s[i - 1] == '0')
-			sum[i] = sum[i - 1] + 1;
-		else if (s[i-1] - '0' <= 2 && s[i-1] - '0' > 0 && s[i] - '0' > 0 && s[i] - '0' <= 6)
-			sum[i] = sum[i - 1] + 1;
-		else
-			sum[i] = sum[i - 1];
-	}
+		if (s[i] != '0'){
 
-	return sum[length - 1];
+			dp[i] += dp[i + 1];
+
+			if (((s[i] - '0') * 10 + s[i + 1] - '0') <= 26)
+				dp[i] += dp[i + 2];
+		}
+	}
+	return dp[0];
 }
 
 
@@ -431,21 +449,5 @@ void main()
 	cout << endl << "s: 101" << endl;
 	cout << numDecodings("101") << endl;
 
-	int i = 100, sum = 0;
-	for (int i = 0; i != 10; i++)
-	{
-		sum += i;
-	}
-	cout << i << " " << sum << endl;
-
-	vector<string> sta;
-	sta = generateSubstrings("rum", 0, sta);
-	/*for (size_t i = 0; i < sta.size(); i++)
-	{
-		cout << sta.at(i) << endl;
-	}*/
-
-	for (auto c : sta)
-		cout << c << endl;
 	system("PAUSE");
 }
