@@ -53,6 +53,7 @@
 #include <unordered_map>
 #include <queue>
 #include <string>
+#include <set>
 
 using namespace std;
 
@@ -182,165 +183,6 @@ void printStree(ListNode *current)
 //	
 //}
 
-ListNode *reverselist(ListNode *temp, ListNode *stop)
-{
-	//ListNode *pcurrent, *pnext, *pexc;
-	//if (temp == NULL || temp->next == NULL)
-	//	return temp;
-	//pcurrent = temp;
-	//pnext = pcurrent->next;
-	//pcurrent->next = NULL;
-
-	//while (pnext != stop)
-	//{
-	//	pexc = pnext->next;
-	//	pnext->next = pcurrent;
-	//	pcurrent = pnext;
-	//	pnext = pexc;
-	//}// 循环一遍，时间上是O(n)，空间O(1)
-	//temp = pcurrent;
-	//return temp;
-	ListNode *current, *p;
-	ListNode *head = new ListNode(0);
-	if (temp == NULL)
-	{
-		return NULL;
-	}
-	head->next = temp;
-	current = head->next;
-	while (current->next != stop)
-	{
-		p = current->next;
-		current->next = p->next;
-		p->next = head->next;
-		head->next = p;
-	}
-	return head->next;
-}
-
-ListNode *reverseBetween(ListNode *head, int m, int n)
-{
-	ListNode *mnode;
-	ListNode *nnode;
-	ListNode *current;
-	ListNode *fhead = new ListNode(0);
-	fhead->next = head;
-	current = mnode = nnode = fhead->next;
-	if (m == n)
-		return fhead->next;
-	int sum = 1;
-	while (sum <= n)
-	{
-		if (sum <= m)
-		{
-			mnode = current;
-		}
-		nnode = current;
-		current = current->next;
-		sum += 1;
-	}
-
-	cout << "mnode: " << mnode->val << endl;
-	cout << "nnode: " << nnode->val << endl;
-	ListNode *temp = mnode;
-	mnode = reverselist(mnode, nnode->next);
-	current = fhead;
-	while (current->next != temp)
-	{
-		current = current->next;
-	}
-	current->next = mnode;
-	//nnode = current;
-	//current = head;
-	//while (current->next != NULL)
-	//	current = current->next;
-	//current = mnode;
-	//while (current->next != NULL)
-	//	current = current->next;
-	//current->next = nnode;
-	//int temp = npoint->val;
-	//npoint->val = mpoint->val;
-	//mpoint->val = temp;
-	return fhead->next;
-}
-
-
-int numDecodings(string s) 
-{
-	//if (s.size() == 0)
-	//	return 0;
-	//if (s[0] == '0')
-	//	return 0;
-	//int length = s.size();
-	//int *sum = new int[length];
-	//sum[0] = 1;
-
-	//for (size_t i = 1; i < length; i++)
-	//{
-	//	if (s[i-1] == '0' && s[i] == '0')
-	//		return  0;
-	//	else if (s[i] == '0')
-	//		sum[i] = sum[i - 1];
-	//	else if (s[i - 1] == '0')
-	//		sum[i] = sum[i - 1] + 1;
-	//	else if (s[i-1] - '0' <= 2 && s[i-1] - '0' > 0 && s[i] - '0' > 0 && s[i] - '0' <= 6)
-	//		sum[i] = sum[i - 1] + 1;
-	//	else
-	//		sum[i] = sum[i - 1];
-	//}
-
-	//return sum[length - 1];
-	if (s.length() == 0) return 0;
-
-	if (s.length() == 1) return s[0] == '0' ? 0 : 1;
-
-	vector<int>dp(s.length() + 1, 0);
-	dp[s.length()] = 1;
-	dp[s.length() - 1] = (s[s.length() - 1] == '0') ? 0 : 1;
-	for (int i = s.length() - 2; i >= 0; i--)
-	{
-		if (s[i] != '0'){
-
-			dp[i] += dp[i + 1];
-
-			if (((s[i] - '0') * 10 + s[i + 1] - '0') <= 26)
-				dp[i] += dp[i + 2];
-		}
-	}
-	return dp[0];
-}
-
-
-vector<string> result;
-void tryIp(int step, string s, string ip) {
-	if (s.empty())
-		return;
-
-	if (step == 3) {
-		if (((s.size() > 3) || (atoi(s.c_str()) > 255))
-			|| (s.size() > 1 && s[0] == '0')){
-			return;
-		}
-
-		ip = ip + "." + s;
-		result.push_back(ip);
-	}
-	else {
-		string ns;
-		if (step) ip += ".";
-		for (int num = 1; num <= 3; num++)
-		{
-			string ns = s.substr(0, num);
-			if (((num == 3) && (atoi(ns.c_str()) > 255))
-				|| (s.size() < num)
-				|| (num > 1 && s[0] == '0'))
-				return;
-
-			tryIp(step + 1, s.substr(num), ip + ns);
-		}
-	}
-}
-
 
 int Btree::count(TreeNode *p)
 {
@@ -383,6 +225,43 @@ void Btree::Postorder(TreeNode *temp)     //这是后序遍历二叉树，采用了递归的方法
 	}
 }
 
+set<vector<int> > generateSubset(vector<int> s, int num, set<vector<int> > sta)
+{
+	if (num == s.size())
+		return sta;
+
+	vector<int> temp;
+	auto b = begin(s) + num;
+	temp.push_back(*b);
+}
+vector<vector<int> > subsetsWithDup(vector<int> &S) {
+	vector<vector<int> > subsets;
+	set<vector<int> >subset;
+	
+	return subsets;
+}
+
+void generateSubstrings(string s, int num, vector<string> &sta)
+{
+	if (num == s.size())
+		return;
+
+	auto b = begin(s) + num;
+
+	string temp = "";
+	temp += *b;
+	sta.push_back(temp);
+	b++;
+	while (b != end(s))
+	{
+
+		temp += *b;
+		sta.push_back(temp);
+		b++;
+
+	}
+	generateSubstrings(s, num + 1, sta);
+}
 
 
 void main()
@@ -424,11 +303,7 @@ void main()
 	vector<int> select = { 2, 3, 5, 1, 9, 6 };
 	for (auto c : select)
 		cout << c << endl;
-	cout << "numDecoding: " << endl;
-	//cout << endl << "s: 10" << endl;
-	//cout << numDecodings("10"); 
-	cout << endl << "s: 101" << endl;
-	cout << numDecodings("101") << endl;
+
 
 	system("PAUSE");
 }
