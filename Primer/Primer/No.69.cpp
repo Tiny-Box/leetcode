@@ -233,18 +233,35 @@ set<vector<int> > generateSubset(vector<int> s, int num, set<vector<int> > sta)
 	vector<int> temp;
 	auto b = begin(s) + num;
 	temp.push_back(*b);
+	sta.insert(temp);
+	b++;
+	while (b != end(s))
+	{
+		for (size_t i = 0; i < num; i++)
+		{
+
+		}
+	}
+	sta.insert(temp);
+
+	return generateSubset(s, num + 1, sta);
 }
 vector<vector<int> > subsetsWithDup(vector<int> &S) {
 	vector<vector<int> > subsets;
 	set<vector<int> >subset;
-	
+	subset = generateSubset(S, 0, subset);
+	subset.insert(vector<int>());
+	for (auto c : subset)
+	{
+		subsets.push_back(c);
+	}
 	return subsets;
 }
 
-void generateSubstrings(string s, int num, vector<string> &sta)
+vector<string> generateSubstrings(string s, int num, vector<string> sta)
 {
 	if (num == s.size())
-		return;
+		return sta;
 
 	auto b = begin(s) + num;
 
@@ -260,7 +277,7 @@ void generateSubstrings(string s, int num, vector<string> &sta)
 		b++;
 
 	}
-	generateSubstrings(s, num + 1, sta);
+	return generateSubstrings(s, num + 1, sta);
 }
 
 
@@ -300,9 +317,11 @@ void main()
 	//cout << endl;
 	//TreeNode *test = reverseBetween(A.root, 2, 4);
 	//printStree(test);
-	vector<int> select = { 2, 3, 5, 1, 9, 6 };
-	for (auto c : select)
-		cout << c << endl;
+	vector<int> S = { 1, 2, 2 };
+	vector<vector<int> > sta = subsetsWithDup(S);
+	//vector<string> select = generateSubstrings("rum", 0, vector<string>(0));
+	//for (auto c : select)
+	//	cout << c << endl;
 
 
 	system("PAUSE");
