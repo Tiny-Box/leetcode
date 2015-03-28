@@ -225,31 +225,76 @@ void Btree::Postorder(TreeNode *temp)     //这是后序遍历二叉树，采用了递归的方法
 	}
 }
 
-set<vector<int> > generateSubset(vector<int> s, int num, set<vector<int> > sta)
-{
-	if (num == s.size())
-		return sta;
 
-	vector<int> temp;
-	auto b = begin(s) + num;
-	temp.push_back(*b);
-	sta.insert(temp);
-	b++;
-	while (b != end(s))
-	{
-		for (size_t i = 0; i < num; i++)
-		{
 
+void print_subset(int n, int *B, int cur) {
+	if (cur == n) {
+		for (int i = 0; i < cur; ++i) {
+			if (B[i]) cout << i << " ";
 		}
+		cout << endl;
+		return;
 	}
-	sta.insert(temp);
+	B[cur] = 1;                 //选第cur个元素
+	print_subset(n, B, cur + 1);
+	B[cur] = 0;                 //不选第cur个元素
+	print_subset(n, B, cur + 1);
+}
 
-	return generateSubset(s, num + 1, sta);
+void generateSubset(vector<int> s, int cur, set<vector<int> > &sta, int *mark)
+{
+	if (s.size() == cur)
+	{
+		vector<int> temp;
+		for (int i = 0; i < cur; i++)
+		{
+			if (mark[i]) temp.push_back(s.at(i));
+		}
+		sort(temp.begin(), temp.end());
+		sta.insert(temp);
+		return;
+	}
+	mark[cur] = 1;
+	generateSubset(s, cur + 1, sta, mark);
+	mark[cur] = 0;
+	generateSubset(s, cur + 1, sta, mark);
+
+
+
+	//if (num == s.size())
+	//	return sta;
+
+	//vector<int> temp;
+	//auto b = begin(s) + num;
+	//temp.push_back(*b);
+	//sta.insert(temp);
+	//b++;
+	//while (b != end(s))
+	//{
+	//	for (size_t i = 0; i < num; i++)
+	//	{
+
+	//	}
+	//}
+	//sta.insert(temp);
+
+	//return generateSubset(s, num + 1, sta);
 }
 vector<vector<int> > subsetsWithDup(vector<int> &S) {
 	vector<vector<int> > subsets;
 	set<vector<int> >subset;
-	subset = generateSubset(S, 0, subset);
+	int *mark = new int[S.size()];
+	for (int i = 0; i < S.size(); i++)
+	{
+		mark[i] = 1;
+	}
+	generateSubset(S, 0, subset, mark);
+	//for (auto c : subset)
+	//{
+	//	for (auto b : c)
+	//		cout << b << " ";
+	//	cout << endl;
+	//}
 	subset.insert(vector<int>());
 	for (auto c : subset)
 	{
@@ -322,6 +367,10 @@ void main()
 	//vector<string> select = generateSubstrings("rum", 0, vector<string>(0));
 	//for (auto c : select)
 	//	cout << c << endl;
+	const int MAXN = 1000;
+	int B[MAXN], n;
+	//print_subset(5, B, 0);
+
 
 
 	system("PAUSE");
