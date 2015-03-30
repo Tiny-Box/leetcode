@@ -164,24 +164,6 @@ void printStree(ListNode *current)
 	}
 }
 
-//void create_tree(TreeNode *root, int x)
-//{
-//	TreeNode *newnode = new TreeNode(x);
-//	if (root = NULL)
-//		root = newnode;
-//	else
-//	{
-//		TreeNode *back = root;
-//		TreeNode *current = root;
-//		while (current != NULL)
-//		{
-//			back = current;
-//			current = current->next;
-//		}
-//		back->next = newnode;
-//	}
-//	
-//}
 
 
 int Btree::count(TreeNode *p)
