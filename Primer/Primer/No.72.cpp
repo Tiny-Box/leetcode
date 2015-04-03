@@ -246,15 +246,15 @@ ListNode *partition(ListNode *head, int x)
 		ListNode *newhead = new ListNode(less.front());
 		head = newhead;
 		less.pop();
-		int length = less.size();
-		for (size_t i = 0; i < length; i++)
+		auto length = less.size();
+		for (auto i = 0; i < length; i++)
 		{
 			newhead->next = new ListNode(less.front());
 			less.pop();
 			newhead = newhead->next;
 		}
 		length = greater.size();
-		for (size_t i = 0; i < length; i++)
+		for (auto i = 0; i < length; i++)
 		{
 			newhead->next = new ListNode(greater.front());
 			greater.pop();
@@ -278,9 +278,13 @@ ListNode *partition(ListNode *head, int x)
 	return head;
 }
 
-ListNode *deleteDuplicates(ListNode *head) {
-	
-}
+//ListNode *deleteDuplicates(ListNode *head) 
+//{
+//	ListNode *pfake = new ListNode(0);
+//	pfake->next = head;
+//
+//
+//}
 
 
 void main()
@@ -307,18 +311,18 @@ void main()
 	//cout << endl << "分层遍历序列: " << endl;
 	//A.display4();
 	//cout << endl << "tryIp is answer." << endl;
-	cout << "建立单链表顺序: " << endl;
-	for (int i = 0; i < k; i++)
-	{
-		cout << array[i] << " ";
-		A.create_Stree(array[i]);
-	}
-	cout << endl;
-	cout << endl << "顺序遍历序列: " << endl;
-	printStree(A.sroot);
-	cout << endl;
-	ListNode *test = partition(A.sroot, 0);
-	printStree(test);
+	//cout << "建立单链表顺序: " << endl;
+	//for (int i = 0; i < k; i++)
+	//{
+	//	cout << array[i] << " ";
+	//	A.create_Stree(array[i]);
+	//}
+	//cout << endl;
+	//cout << endl << "顺序遍历序列: " << endl;
+	//printStree(A.sroot);
+	//cout << endl;
+	//ListNode *test = partition(A.sroot, 0);
+	//printStree(test);
 
 
 
