@@ -90,6 +90,7 @@ public:
 	}
 	void create_Btree(int);
 	void create_Stree(int);
+	void deletenum(int);
 	void printStree(TreeNode *);
 	void levelorder(TreeNode *);
 	void Preorder(TreeNode *);                  //先序遍历
@@ -154,6 +155,29 @@ void Btree::create_Stree(int x)
 		}
 		back->next = newnode;
 	}
+}
+
+void Btree::deletenum(int x)
+{
+	ListNode *phead = new ListNode(0);
+	ListNode *pback = phead;
+	ListNode *pcur = sroot;
+	phead->next = sroot;
+	while (pcur != NULL)
+	{
+		if (pcur->val == x)
+		{
+			pback->next = pback->next->next;
+			pcur->next = NULL;
+			delete pcur;
+			break;
+		}
+		pcur = pcur->next;
+		pback = pback->next;
+	}
+
+	sroot = phead->next;
+
 }
 
 void printStree(ListNode *current)
@@ -223,6 +247,8 @@ void print_subset(int n, int *B, int cur) {
 	B[cur] = 0;                 //不选第cur个元素
 	print_subset(n, B, cur + 1);
 }
+
+
 
 ListNode *partition(ListNode *head, int x)
 {
@@ -311,16 +337,26 @@ void main()
 	//cout << endl << "分层遍历序列: " << endl;
 	//A.display4();
 	//cout << endl << "tryIp is answer." << endl;
-	//cout << "建立单链表顺序: " << endl;
-	//for (int i = 0; i < k; i++)
-	//{
-	//	cout << array[i] << " ";
-	//	A.create_Stree(array[i]);
-	//}
-	//cout << endl;
-	//cout << endl << "顺序遍历序列: " << endl;
-	//printStree(A.sroot);
-	//cout << endl;
+	cout << "建立单链表顺序: " << endl;
+	for (int i = 0; i < k; i++)
+	{
+		cout << array[i] << " ";
+		A.create_Stree(array[i]);
+	}
+	cout << endl;
+	cout << endl << "顺序遍历序列: " << endl;
+	printStree(A.sroot);
+	cout << endl;
+	cout << endl << "删除测试: " << endl;
+	A.deletenum(6);
+	printStree(A.sroot);
+	cout << endl;
+	A.deletenum(4);
+	printStree(A.sroot);
+	cout << endl;
+	A.deletenum(7);
+	cout << endl;
+	printStree(A.sroot);
 	//ListNode *test = partition(A.sroot, 0);
 	//printStree(test);
 
