@@ -1,18 +1,43 @@
-﻿生成启动时间为 2015/4/5 23:58:00。
+﻿生成启动时间为 2015/4/29 18:14:41。
      1>项目“C:\Users\Tiny__000\Source\Repos\leetcode\Primer\Primer\Primer.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /D _MBCS /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt No.72.cpp
-         No.72.cpp
-     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\no.72.cpp(276): warning C4018: “<”: 有符号/无符号不匹配
-     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\no.72.cpp(283): warning C4018: “<”: 有符号/无符号不匹配
-     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\no.72.cpp(296): warning C4018: “<”: 有符号/无符号不匹配
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tiny__000\Source\Repos\leetcode\Primer\Debug\Primer.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tiny__000\Source\Repos\leetcode\Primer\Debug\Primer.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tiny__000\Source\Repos\leetcode\Primer\Debug\Primer.lib" /MACHINE:X86 /PROFILE /Profile Debug\No.72.obj
-     1>LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/PROFILE”规范)
-     1>No.72.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
-         Primer.vcxproj -> C:\Users\Tiny__000\Source\Repos\leetcode\Primer\Debug\Primer.exe
-     1>已完成生成项目“C:\Users\Tiny__000\Source\Repos\leetcode\Primer\Primer\Primer.vcxproj”(Build 个目标)的操作。
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /D _MBCS /D _CRT_SECURE_NO_WARNINGS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt primersum.cpp
+         primersum.cpp
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(5): error C2144: 语法错误:“bool”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(5): error C4430: 缺少类型说明符 - 假定为 int。注意:  C++ 不支持默认 int
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(7): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(7): error C4430: 缺少类型说明符 - 假定为 int。注意:  C++ 不支持默认 int
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(7): error C2086: “int constexpr”: 重定义
+                 c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(5) : 参见“constexpr”的声明
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(11): error C2144: 语法错误:“bool”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(11): error C4430: 缺少类型说明符 - 假定为 int。注意:  C++ 不支持默认 int
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(11): error C2086: “int constexpr”: 重定义
+                 c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(5) : 参见“constexpr”的声明
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(15): error C2144: 语法错误:“bool”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(15): error C4430: 缺少类型说明符 - 假定为 int。注意:  C++ 不支持默认 int
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(15): error C2086: “int constexpr”: 重定义
+                 c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(5) : 参见“constexpr”的声明
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(19): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(19): error C4430: 缺少类型说明符 - 假定为 int。注意:  C++ 不支持默认 int
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(19): error C2086: “int constexpr”: 重定义
+                 c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(5) : 参见“constexpr”的声明
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(23): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(23): error C4430: 缺少类型说明符 - 假定为 int。注意:  C++ 不支持默认 int
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(23): error C2086: “int constexpr”: 重定义
+                 c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(5) : 参见“constexpr”的声明
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(37): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(38): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(39): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(40): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(41): error C2144: 语法错误:“int”的前面应有“;”
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(54): error C2971: “std::bitset”: 模板参数“_Bits”:“S”: 局部变量不能用作非类型参数
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\bitset(22) : 参见“std::bitset”的声明
+                 c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(40) : 参见“S”的声明
+     1>c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(66): error C2971: “std::bitset”: 模板参数“_Bits”:“S”: 局部变量不能用作非类型参数
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\bitset(22) : 参见“std::bitset”的声明
+                 c:\users\tiny__000\source\repos\leetcode\primer\primer\primersum.cpp(40) : 参见“S”的声明
+     1>已完成生成项目“C:\Users\Tiny__000\Source\Repos\leetcode\Primer\Primer\Primer.vcxproj”(Build 个目标)的操作 - 失败。
 
-生成成功。
+生成失败。
 
-已用时间 00:00:01.03
+已用时间 00:00:03.01

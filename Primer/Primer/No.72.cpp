@@ -304,13 +304,16 @@ ListNode *partition(ListNode *head, int x)
 	return head;
 }
 
-//ListNode *deleteDuplicates(ListNode *head) 
-//{
-//	ListNode *pfake = new ListNode(0);
-//	pfake->next = head;
-//
-//
-//}
+ListNode *deleteDuplicates(ListNode *head) 
+{
+	ListNode *phead = new ListNode(0);
+	phead->next = head;
+	ListNode *pback = phead;
+	ListNode *pcur = head;
+
+	map<int, int> flag;
+
+}
 
 
 void main()
